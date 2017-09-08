@@ -1,18 +1,6 @@
-<section class="category-list">
-  <header class="header">
-    <h1>Categories</h1>
-    <input class="new-category" placeholder="Add new category" autofocus="" [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()">
-  </header>
-  <section class="main" *ngIf="categories.length > 0">
-    <ul class="category-list">
-      <li *ngFor="let category of categories" >
-        <div class="view">
-          <label>{{category.name}}</label>
-        </div>
-      </li>
-    </ul>
-  </section>
-  <!--<footer class="footer" *ngIf="todos.length > 0">
-    <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
-  </footer>-->
-</section>
+
+<div class="category-group">
+  <div *ngFor="let group of categoryGroups">
+    <category-group [group]="group"></category-group>
+  </div>
+</div>

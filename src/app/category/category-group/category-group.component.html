@@ -1,0 +1,16 @@
+<p-fieldset legend="{{group.title}}" [toggleable]="true">
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
+    <label for="float-input">Add new category</label>
+  </span>
+  <section class="main" *ngIf="categories.length > 0">
+    <ul class="category-list">
+      <li *ngFor="let category of categories">
+        <div class="view">
+          <label>{{category.name}}</label>
+          <button class="destroy" (click)="removeCategory(category)"></button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</p-fieldset>
