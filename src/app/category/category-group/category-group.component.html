@@ -1,16 +1,40 @@
-<p-fieldset legend="{{group.title}}" [toggleable]="true">
+<!--<p-fieldset legend="{{group.title}}" [toggleable]="true">
   <span class="ui-float-label">
     <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
     <label for="float-input">Add new category</label>
   </span>
   <section class="main" *ngIf="categories.length > 0">
-    <ul class="category-list">
-      <li *ngFor="let category of categories">
-        <div class="view">
-          <label>{{category.name}}</label>
-          <button class="destroy" (click)="removeCategory(category)"></button>
-        </div>
-      </li>
-    </ul>
+    <div class="category-list">
+      <div class="ui-inputgroup" *ngFor="let category of categories">
+        <label>{{category.name}}</label>
+        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="removeCategory(category)"></button>
+      </div>
+    </div>
   </section>
-</p-fieldset>
+</p-fieldset>-->
+
+<h2 class="title-01">{{group.title}}</h2>
+<span class="ui-float-label">
+  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
+  <label for="float-input">Add new category</label>
+</span>
+
+<p-dataTable [value]="categories">
+  <p-column field="parentId" header="Parent ID"></p-column>
+  <p-column field="name" [style]="{'width': '400px'}" header="Name"></p-column>
+  <!--<p-column field="color" header="Color">
+      <ng-template let-col let-car="rowData" pTemplate="body">
+          <span [style.color]="car[col.field]">{{car[col.field]}}</span>
+      </ng-template>
+  </p-column>-->
+  <p-column styleClass="action">
+      <ng-template pTemplate="header">
+          <button type="button" pButton icon="fa-refresh"></button>
+      </ng-template>
+      <ng-template let-category="rowData" pTemplate="body">
+          <button type="button" pButton (click)="removeCategory(category)" icon="fa-trash"></button>
+      </ng-template>
+  </p-column>
+</p-dataTable>
+
+

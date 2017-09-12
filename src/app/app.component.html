@@ -6,8 +6,8 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a routerLink="" routerLinkActive="active" routerLinkActiveOptions="{exact : true}">Home</a></li>
-        <li><a routerLink="/category" routerLinkActive="active">Category</a></li>
-        <li><a routerLink="/product" routerLinkActive="active">Product</a></li>
+        <li><a routerLink="/categories" routerLinkActive="active">Category</a></li>
+        <li><a [routerLink]="['/products']" routerLinkActive="active">Product</a></li>
       </ul>
     </div>
   </nav>

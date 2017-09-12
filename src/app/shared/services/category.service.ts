@@ -9,13 +9,13 @@ const CATEGORY_URL: string = environment.apiUrl + '/categories';
 @Injectable()
 export class CategoryService {
 
-  constructor(private http: Http) { }
+  constructor(private _http: Http) { }
 
   /**
    * Grab all category items from loopback api
    */
   getAllCategories(): Observable<Category[]> {
-    return this.http
+    return this._http
       .get(CATEGORY_URL)
       .map(res => {
         const categories = res.json();
@@ -28,7 +28,7 @@ export class CategoryService {
    * Grab group of category items for given parentId from loopback api
    */
   getCategoriesById(pId: number): Observable<Category[]> {
-    return this.http
+    return this._http
       .get(CATEGORY_URL)
       .map(res => {
         const categories = res.json();
@@ -44,7 +44,7 @@ export class CategoryService {
    * Note: Http post request will be cold if there is not any subcribe() call
    */
   addCategory(category: Category): Observable<Category> {
-    return this.http
+    return this._http
       .post(CATEGORY_URL, category)
       .map((res) =>
       { 
@@ -58,7 +58,7 @@ export class CategoryService {
    * Note: Http post request will be cold if there is not any subcribe() call
    */
   removeCategory(categoryId: string): Observable<Category> {
-    return this.http
+    return this._http
       .delete(CATEGORY_URL + "/" + categoryId)
       .map((res) => null)
       .catch(this.handleError);
