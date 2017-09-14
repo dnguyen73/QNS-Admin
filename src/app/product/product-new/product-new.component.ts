@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileObject } from "../../shared/models/fileobject";
+import { Stock } from "../../shared/models/stock";
 import { environment } from './../../../environments/environment';
 import { ConfirmationService } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
@@ -11,22 +12,39 @@ import { ProductService } from "../../shared/services/product.service";
 })
 export class ProductNewComponent implements OnInit {
 
+  selectedFiles = [];
+  stocks: Stock[] = [];
+
   constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
 
-  public count: number = 1;
-  public test = {
-    a: 1,
-    b: 2
-  }
-
-
   ngOnInit() {
+    let emptyStock: Stock = new Stock({
+      filename: '',
+      description: '',
+      size: '',
+      quantity: 0
+    });
+    this.stocks = this.stocks.concat(emptyStock);
   }
 
-  updateCount() {
-    this.count++;
+  onFileSelected(uploadedFiles: FileObject[]) {
+    this.selectedFiles = [];
+    for (let i of uploadedFiles) {
+      this.selectedFiles = this.selectedFiles.concat({
+        label: i.description,
+        value: i.description
+      });
+    }
   }
 
-  
+  onAddStock() {
+    let emptyStock: Stock = new Stock({
+      filename: '',
+      description: '',
+      size: '',
+      quantity: 0
+    });
+    this.stocks = this.stocks.concat(emptyStock);
+  }
 
 }

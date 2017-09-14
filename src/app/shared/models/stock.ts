@@ -1,11 +1,8 @@
-
-export class FileObject {
+export class Stock {
     filename: string;
-    filepath: string;
-    filesize: number;
-    isColor: boolean;
     description: string;
-    file: File;
+    size: string;
+    quantity: number;
 
     constructor(values: Object = {}){
         Object.assign(this, values);

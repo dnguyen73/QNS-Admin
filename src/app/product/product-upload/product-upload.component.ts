@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FileObject } from "../../shared/models/fileobject";
 import { environment } from './../../../environments/environment';
-import { ConfirmationService } from "primeng/primeng";
+import { ConfirmationService, FileUpload } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
 
 @Component({
@@ -10,47 +10,64 @@ import { ProductService } from "../../shared/services/product.service";
   styleUrls: ['./product-upload.component.css']
 })
 export class ProductUploadComponent implements OnInit {
-
-constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
-  uploadedFiles: FileObject[] = []
+  @ViewChild('fileUpload') fileUpload: FileUpload;
+  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
+  uploadedFiles: FileObject[] = [];
 
   ngOnInit() {
   }
 
-  @Input()
-  count: number;
-
   @Output()
-  countChange = new EventEmitter();
-
-  @Input()
-  test: {
-    a: number;
-    b: number;
-  }
-
-  increase (){
-    this.count ++;
-    this.test.a ++;
-    this.countChange.emit(this.count);
-  }
+  fileSelected = new EventEmitter();
 
   //Upload Completed event handler: To update the files list
-  onUploadCompleted(event) {
+  onUploadHandler(event) {
     for (let file of event.files) {
-      let f = new FileObject({ filename: file.name, filepath: environment.FILE_HOST_URL + "/1/" + file.name, filesize: file.size, isColor: false });
-      this.uploadedFiles = this.uploadedFiles.concat(f);
+      this.productSvc.uploadProductImage("1", file)
+        .subscribe((data) => {
+          //data = {container: "1", name: "err.png", type: "image/png", field: "file", size: 86232}
+        });
     }
   }
 
+  onUpload(event) {
+        for(let file of event.files) {
+            this.uploadedFiles.push(file);
+        }
+    }
+
   //After Files Selected event to avoid uploading duplicated files
-  onSelectCompleted(event, fileUpload) {
+  //Store selected file in uploadedFiles variable.
+  onSelectCompleted(event) {
     let selected = this.uploadedFiles.filter((f) => f.filename === event.files[0].name);
     if (selected.length > 0) {
       alert("Files existing! Please select another files");
       //clear the list
-      fileUpload.clear();
+      this.fileUpload.clear();
+    } else {
+      for (let file of event.files) {
+        let f = new FileObject({
+          filename: file.name,
+          filepath: environment.FILE_HOST_URL + "/1/" + file.name,
+          filesize: file.size,
+          isColor: false,
+          description: "",
+          file: file
+        });
+        this.uploadedFiles = this.uploadedFiles.concat(f);
+        //this.fileSelected.emit(this.uploadedFiles);
+      }
     }
+  }
+
+  //event handler to bind uploadedFiles data to parent component
+  //Only item which is selected for Color is emitted
+  onRefresh() {
+    this.fileSelected.emit(
+      this.uploadedFiles.filter((f) => {
+        return f.isColor;
+      })
+    );
   }
 
   //Remove file handler on each row.

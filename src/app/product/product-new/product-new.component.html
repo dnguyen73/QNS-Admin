@@ -1,5 +1,28 @@
 <p>
-  {{test.a}} product-new works! {{count}}
-  <product-upload [count]="count" (countChange)="updateCount()" [(test)]="test"></product-upload>
+  <product-upload (fileSelected)="onFileSelected($event)"></product-upload>
 </p>
 
+<!-- Stock Section -->
+<p-dataTable [value]="stocks">
+  <p-column field="filename" header="File Name"></p-column>
+  <!--<p-column field="filepath" [style]="{'width': '400px'}" header="Path"></p-column>
+  <p-column field="filesize" [style]="{'width': '100px'}" header="Size"></p-column>
+  <p-column field="isColor" [style]="{'width': '100px'}" header="Used as Color"></p-column>-->
+  <p-column styleClass="action">
+    <ng-template pTemplate="header">
+      <label>Color Description</label>  
+    </ng-template>
+    <ng-template let-f="rowData" pTemplate="body">
+      <p-dropdown [options]="selectedFiles" [(ngModel)]="f.description" placeholder="Select a color"></p-dropdown>
+    </ng-template>
+  </p-column>
+  <p-column styleClass="action">
+    <ng-template pTemplate="header">
+      <button type="button" pButton icon="fa-refresh"></button>
+    </ng-template>
+    <ng-template let-file="rowData" pTemplate="body">
+      <button type="button" pButton (click)="removeFile(file)" icon="fa-trash"></button>
+    </ng-template>
+  </p-column>
+</p-dataTable>
+<button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { ProductComponent } from './product.component';
 import { FilterSectionComponent } from './filter-section/filter-section.component';
@@ -23,15 +24,19 @@ import { ProductUploadComponent } from './product-upload/product-upload.componen
 import { FileUploadModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+import { CheckboxModule } from 'primeng/primeng';
+import {InputTextModule} from 'primeng/primeng';
+import {DropdownModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'products', component: ProductComponent },
       { path: 'products/add', component: ProductNewComponent }
     ]),
-    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule
+    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule
   ],
   providers: [ProductService, ConfirmationService],
   declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent]
