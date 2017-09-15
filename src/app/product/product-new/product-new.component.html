@@ -1,6 +1,10 @@
-<p>
+<div>
   <product-upload (fileSelected)="onFileSelected($event)"></product-upload>
-</p>
+</div>
+
+<div>
+  <product-size (sizeSelected)="onSizeSelected($event)"></product-size>
+</div>
 
 <!-- Stock Section -->
 <p-dataTable [value]="stocks">
@@ -10,10 +14,26 @@
   <p-column field="isColor" [style]="{'width': '100px'}" header="Used as Color"></p-column>-->
   <p-column styleClass="action">
     <ng-template pTemplate="header">
-      <label>Color Description</label>  
+      <label>Color Description</label>
     </ng-template>
-    <ng-template let-f="rowData" pTemplate="body">
-      <p-dropdown [options]="selectedFiles" [(ngModel)]="f.description" placeholder="Select a color"></p-dropdown>
+    <ng-template let-row="rowData" pTemplate="body">
+      <p-dropdown [options]="selectedFiles" [(ngModel)]="row.description" placeholder="Select a color"></p-dropdown>
+    </ng-template>
+  </p-column>
+  <p-column styleClass="action">
+    <ng-template pTemplate="header">
+      <label>Size Selection</label>
+    </ng-template>
+    <ng-template let-row="rowData" pTemplate="body">
+      <p-dropdown [options]="selectedSizes" [(ngModel)]="row.size" placeholder="Select a size"></p-dropdown>
+    </ng-template>
+  </p-column>
+  <p-column styleClass="action">
+    <ng-template pTemplate="header">
+      <label>Quantity</label>
+    </ng-template>
+    <ng-template let-row="rowData" pTemplate="body">
+      <input type="number" pInputText [(ngModel)]="row.quantity" (ngModelChange)="sumQuantity()"/>
     </ng-template>
   </p-column>
   <p-column styleClass="action">
@@ -25,4 +45,9 @@
     </ng-template>
   </p-column>
 </p-dataTable>
+
+<div>
+  <label>Total Quantity : {{totalQuantity}}</label>
+
+</div>
 <button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>

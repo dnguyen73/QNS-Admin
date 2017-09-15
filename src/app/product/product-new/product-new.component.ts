@@ -4,6 +4,7 @@ import { Stock } from "../../shared/models/stock";
 import { environment } from './../../../environments/environment';
 import { ConfirmationService } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
+import { Size } from "../../shared/models/size";
 
 @Component({
   selector: 'app-product-new',
@@ -13,7 +14,9 @@ import { ProductService } from "../../shared/services/product.service";
 export class ProductNewComponent implements OnInit {
 
   selectedFiles = [];
+  selectedSizes: Size[] = [];
   stocks: Stock[] = [];
+  totalQuantity: number = 0;
 
   constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
 
@@ -37,6 +40,10 @@ export class ProductNewComponent implements OnInit {
     }
   }
 
+  onSizeSelected(sizes: Size[]) {
+    this.selectedSizes = sizes;
+  }
+
   onAddStock() {
     let emptyStock: Stock = new Stock({
       filename: '',
@@ -47,4 +54,12 @@ export class ProductNewComponent implements OnInit {
     this.stocks = this.stocks.concat(emptyStock);
   }
 
+//Calculate total quantity once quantity of sub item has changed.
+  sumQuantity(){
+    this.totalQuantity = 0;
+    for(let s of this.stocks){
+      this.totalQuantity += s.quantity;
+    }
+    return this.totalQuantity;
+  }
 }

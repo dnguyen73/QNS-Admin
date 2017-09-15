@@ -3,8 +3,10 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from './../../../environments/environment';
 import { FileObject } from "../models/fileobject";
+import { Size } from "../models/size";
 
 const FILE_URL: string = environment.apiUrl + '/attachments';
+const SIZE_URL: string = environment.apiUrl + '/sizes';
 
 @Injectable()
 export class ProductService {
@@ -34,6 +36,20 @@ export class ProductService {
       .map((res) => {
         console.log(JSON.stringify(res));
         return res.json().result.files.file[0];
+      })
+      .catch(this.handleError);
+  }
+
+  /**
+   * Upload product image to given comtainer
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  getAllProductSizes(): Observable<Size[]> {
+    return this._http
+      .get(SIZE_URL)
+      .map(res => {
+        const sizes = res.json();
+        return sizes.map((category) => new Size(category));
       })
       .catch(this.handleError);
   }

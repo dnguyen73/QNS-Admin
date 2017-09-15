@@ -1,0 +1,20 @@
+<p-header>
+    Kid Size selection
+</p-header>
+<p-dataGrid [value]="kidSizes">
+    <ng-template let-size pTemplate="item">
+        <div class="ui-g ui-fluid size-item">
+            <div class="ui-g-12 ui-md-2" (click)="toggleSelect(size)" [class.active]="size.selected">{{size.label}}</div>
+        </div>
+    </ng-template>
+</p-dataGrid>
+<p-header>
+    Adult Size selection
+</p-header>
+<p-dataGrid [value]="adultSizes">
+    <ng-template let-size pTemplate="item">
+        <div class="ui-g ui-fluid size-item">
+            <div class="ui-g-12 ui-md-2" (click)="toggleSelect(size)" [class.active]="size.selected">{{size.label}}</div>
+        </div>
+    </ng-template>
+</p-dataGrid>

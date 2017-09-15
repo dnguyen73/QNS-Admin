@@ -31,10 +31,10 @@ export class ProductUploadComponent implements OnInit {
   }
 
   onUpload(event) {
-        for(let file of event.files) {
-            this.uploadedFiles.push(file);
-        }
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
     }
+  }
 
   //After Files Selected event to avoid uploading duplicated files
   //Store selected file in uploadedFiles variable.
@@ -65,7 +65,7 @@ export class ProductUploadComponent implements OnInit {
   onRefresh() {
     this.fileSelected.emit(
       this.uploadedFiles.filter((f) => {
-        return f.isColor;
+        return f.isColor && f.description !== "";
       })
     );
   }
@@ -77,17 +77,17 @@ export class ProductUploadComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'fa fa-trash',
       accept: () => {
-        this.productSvc
-          .removeProductImage("1", f.filename)
-          .subscribe(
-          () => {
-            let index = this.uploadedFiles.map(function (file) {
-              return file.filename;
-            }).indexOf(f.filename);
-            this.uploadedFiles = this.uploadedFiles.filter((val, i) => i != index);
-            console.log(this.uploadedFiles.length);
-          }
-          )
+        //this.productSvc
+        //.removeProductImage("1", f.filename)
+        //.subscribe(
+        //() => {
+        let index = this.uploadedFiles.map(function (file) {
+          return file.filename;
+        }).indexOf(f.filename);
+        this.uploadedFiles = this.uploadedFiles.filter((val, i) => i != index);
+        this.onRefresh();
+        //}
+        //)
       },
       reject: () => { }
     });

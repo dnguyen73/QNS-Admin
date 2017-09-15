@@ -27,6 +27,8 @@ import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
 import {InputTextModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
+import {DataGridModule} from 'primeng/primeng';
+import { ProductSizeComponent } from './product-size/product-size.component';
 
 @NgModule({
   imports: [
@@ -36,9 +38,9 @@ import {DropdownModule} from 'primeng/primeng';
       { path: 'products', component: ProductComponent },
       { path: 'products/add', component: ProductNewComponent }
     ]),
-    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule
+    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule, DataGridModule
   ],
   providers: [ProductService, ConfirmationService],
-  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent]
+  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent]
 })
 export class ProductModule { }
