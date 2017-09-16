@@ -1,3 +1,18 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-4 ui-sm-4 code-item">{{newProduct.productCode}}</div>
+  <div class="ui-g-12 ui-md-8 ui-sm-4">
+    <p>Created Date : {{today | amDateFormat:'LL'}} - {{newProduct.createdDate}}
+    <input type="text" pInputText [(ngModel)]="newProduct.productName" placeholder="Type in brief product name" />
+  </div>
+</div>
+<div>
+  <p>Product description</p>
+  <textarea [rows]="5" [cols]="60" pInputTextarea [(ngModel)]="newProduct.description" autoResize="true"></textarea>
+</div>
+<div>
+  <p>Original Vendor</p>
+  <input type="text" pInputText [(ngModel)]="newProduct.originalVendor" placeholder="Type in vendor" />
+</div>
 <div>
   <product-upload (fileSelected)="onFileSelected($event)"></product-upload>
 </div>
@@ -7,47 +22,83 @@
 </div>
 
 <!-- Stock Section -->
-<p-dataTable [value]="stocks">
-  <p-column field="filename" header="File Name"></p-column>
-  <!--<p-column field="filepath" [style]="{'width': '400px'}" header="Path"></p-column>
+<div class="stock-item">
+  <p-dataTable [value]="stocks">
+    <p-column field="filename" header="File Name"></p-column>
+    <!--<p-column field="filepath" [style]="{'width': '400px'}" header="Path"></p-column>
   <p-column field="filesize" [style]="{'width': '100px'}" header="Size"></p-column>
   <p-column field="isColor" [style]="{'width': '100px'}" header="Used as Color"></p-column>-->
-  <p-column styleClass="action">
-    <ng-template pTemplate="header">
-      <label>Color Description</label>
-    </ng-template>
-    <ng-template let-row="rowData" pTemplate="body">
-      <p-dropdown [options]="selectedFiles" [(ngModel)]="row.description" placeholder="Select a color"></p-dropdown>
-    </ng-template>
-  </p-column>
-  <p-column styleClass="action">
-    <ng-template pTemplate="header">
-      <label>Size Selection</label>
-    </ng-template>
-    <ng-template let-row="rowData" pTemplate="body">
-      <p-dropdown [options]="selectedSizes" [(ngModel)]="row.size" placeholder="Select a size"></p-dropdown>
-    </ng-template>
-  </p-column>
-  <p-column styleClass="action">
-    <ng-template pTemplate="header">
-      <label>Quantity</label>
-    </ng-template>
-    <ng-template let-row="rowData" pTemplate="body">
-      <input type="number" pInputText [(ngModel)]="row.quantity" (ngModelChange)="sumQuantity()"/>
-    </ng-template>
-  </p-column>
-  <p-column styleClass="action">
-    <ng-template pTemplate="header">
-      <button type="button" pButton icon="fa-refresh"></button>
-    </ng-template>
-    <ng-template let-file="rowData" pTemplate="body">
-      <button type="button" pButton (click)="removeFile(file)" icon="fa-trash"></button>
-    </ng-template>
-  </p-column>
-</p-dataTable>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Color Description</label>
+      </ng-template>
+      <ng-template let-row="rowData" pTemplate="body">
+        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" placeholder="Select a color"></p-dropdown>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Size Selection</label>
+      </ng-template>
+      <ng-template let-rs="rowData" pTemplate="body">
+        <p-dropdown [options]="selectedSizes" [styleClass]="stock-dropdown" [(ngModel)]="rs.size" placeholder="Select a size"></p-dropdown>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Quantity</label>
+      </ng-template>
+      <ng-template let-row="rowData" pTemplate="body">
+        <!--<input type="number" pInputText [(ngModel)]="row.quantity" (ngChange)="sumQuantity()" />-->
+        <p-spinner size="30" [(ngModel)]="row.quantity" [min]="0" (onChange)="sumQuantity()"></p-spinner>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <button type="button" pButton icon="fa-refresh"></button>
+      </ng-template>
+      <ng-template let-file="rowData" pTemplate="body">
+        <button type="button" pButton (click)="removeFile(file)" icon="fa-trash"></button>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+</div>
 
 <div>
-  <label>Total Quantity : {{totalQuantity}}</label>
+  <label>Total Quantity : {{newProduct.totalQuantity}}</label>
 
 </div>
 <button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>
+
+
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <label>Unit Price</label>
+  </div>
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <div class="ui-inputgroup">
+      <input type="number" pInputText [(ngModel)]="newProduct.price" placeholder="Price">
+      <span class="ui-inputgroup-addon">VND</span>
+    </div>
+  </div>
+</div>
+
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <label>On Sale?</label>
+  </div>
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <p-inputSwitch onLabel="Sale" offLabel="No Sale" [(ngModel)]="newProduct.isOnSale"></p-inputSwitch>
+  </div>
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <label>Discount</label>
+  </div>
+  <div class="ui-g-12 ui-md-2 ui-sm-2">
+    <div class="ui-inputgroup">
+      <input type="number" pInputText [(ngModel)]="newProduct.discount" placeholder="Price" [disabled]="!newProduct.isOnSale">
+      <span class="ui-inputgroup-addon">%</span>
+    </div>
+  </div>
+</div>
+
+<button pButton type="button" label="Create Product" (click)="submit()"></button>

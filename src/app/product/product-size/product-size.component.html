@@ -3,8 +3,8 @@
 </p-header>
 <p-dataGrid [value]="kidSizes">
     <ng-template let-size pTemplate="item">
-        <div class="ui-g ui-fluid size-item">
-            <div class="ui-g-12 ui-md-2" (click)="toggleSelect(size)" [class.active]="size.selected">{{size.label}}</div>
+        <div class="ui-g ui-fluid size-item" (click)="toggleSelect(size)" [class.active]="size.selected">
+            <div class="ui-g-12 ui-md-2" >{{size.label}}</div>
         </div>
     </ng-template>
 </p-dataGrid>
@@ -13,8 +13,8 @@
 </p-header>
 <p-dataGrid [value]="adultSizes">
     <ng-template let-size pTemplate="item">
-        <div class="ui-g ui-fluid size-item">
-            <div class="ui-g-12 ui-md-2" (click)="toggleSelect(size)" [class.active]="size.selected">{{size.label}}</div>
+        <div class="ui-g ui-fluid size-item" (click)="toggleSelect(size)" [class.active]="size.selected">
+            <div class="ui-g-12 ui-md-2">{{size.label}}</div>
         </div>
     </ng-template>
 </p-dataGrid>

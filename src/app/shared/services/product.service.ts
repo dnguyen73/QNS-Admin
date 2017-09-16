@@ -4,14 +4,30 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from './../../../environments/environment';
 import { FileObject } from "../models/fileobject";
 import { Size } from "../models/size";
+import { Product } from "../models/product";
 
 const FILE_URL: string = environment.apiUrl + '/attachments';
 const SIZE_URL: string = environment.apiUrl + '/sizes';
+const PRODUCT_URL: string = environment.apiUrl + '/products';
 
 @Injectable()
 export class ProductService {
 
   constructor(private _http: Http) { }
+
+  /**
+     * Generate product code randomly by A..Z0..9
+     * This will be generated for only new product
+     */
+  generateUid(): string {
+    let _uid = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    for (var i = 0; i < 6; i++)
+      _uid += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return _uid;
+  }
 
   /**
    * Delete product image by given comtainer and filename
@@ -50,6 +66,20 @@ export class ProductService {
       .map(res => {
         const sizes = res.json();
         return sizes.map((category) => new Size(category));
+      })
+      .catch(this.handleError);
+  }
+
+  /**
+   * Add new product
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  addProduct(product: Product): Observable<Product> {
+    return this._http
+      .post(PRODUCT_URL, product)
+      .map((res) =>
+      { 
+        return new Product(res.json());
       })
       .catch(this.handleError);
   }

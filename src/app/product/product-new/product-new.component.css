@@ -1,0 +1,12 @@
+.stock-item .ui-dropdown{
+    width: 150px !important;
+}
+
+.code-item{
+    padding: 10px 20px;
+    border: 2px solid #000;
+    color: red;
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+}

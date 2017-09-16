@@ -1,17 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FileObject } from "../../shared/models/fileobject";
 import { environment } from './../../../environments/environment';
 import { ConfirmationService, FileUpload } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'product-upload',
   templateUrl: './product-upload.component.html',
-  styleUrls: ['./product-upload.component.css']
+  styleUrls: ['./product-upload.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProductUploadComponent implements OnInit {
   @ViewChild('fileUpload') fileUpload: FileUpload;
-  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
+  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService, private sanitizer:DomSanitizer) { }
   uploadedFiles: FileObject[] = [];
 
   ngOnInit() {
@@ -19,6 +21,9 @@ export class ProductUploadComponent implements OnInit {
 
   @Output()
   fileSelected = new EventEmitter();
+
+  // @Output()
+  // allFileSelected = new EventEmitter();
 
   //Upload Completed event handler: To update the files list
   onUploadHandler(event) {
@@ -63,11 +68,12 @@ export class ProductUploadComponent implements OnInit {
   //event handler to bind uploadedFiles data to parent component
   //Only item which is selected for Color is emitted
   onRefresh() {
-    this.fileSelected.emit(
-      this.uploadedFiles.filter((f) => {
-        return f.isColor && f.description !== "";
-      })
-    );
+    // this.fileSelected.emit(
+    //   this.uploadedFiles.filter((f) => {
+    //     return f.isColor && f.description !== "";
+    //   })
+    // );
+    this.fileSelected.emit(this.uploadedFiles);
   }
 
   //Remove file handler on each row.
@@ -91,6 +97,11 @@ export class ProductUploadComponent implements OnInit {
       },
       reject: () => { }
     });
-  }
 
+
+  }
+  //avoid adding prefix “unsafe:” to links
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
 }
