@@ -5,10 +5,10 @@
     <div class="ui-g-9">
         <div class="ui-g">
             <div class="ui-g-12">
-              <product-search></product-search>
+              <product-search (tabSelected)="onTabSelected($event)"></product-search>
             </div>
             <div class="ui-g-12">
-              <product-list></product-list>
+              <product-list [parentId]="parentId"></product-list>
             </div>
         </div>
     </div>

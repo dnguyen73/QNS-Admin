@@ -1,12 +1,16 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FileObject } from "../../shared/models/fileobject";
 import { Stock } from "../../shared/models/stock";
 import { environment } from './../../../environments/environment';
 import { ConfirmationService } from "primeng/primeng";
+import { Message } from 'primeng/components/common/api';
 import { ProductService } from "../../shared/services/product.service";
 import { Size } from "../../shared/models/size";
 import { Product } from "../../shared/models/product";
 import { SelectColor } from "../../shared/models/selectColor";
+import { CategoryService } from "../../shared/services/category.service";
+import { Category } from "../../shared/models/category";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-product-new',
@@ -16,27 +20,53 @@ import { SelectColor } from "../../shared/models/selectColor";
 })
 export class ProductNewComponent implements OnInit {
 
+  @ViewChild('pUpload') uploadChild;
+  @ViewChild('pSize') sizeChild;
+
   today: number = Date.now();
   newProduct: Product = new Product();
+  categories = [];
   colorFiles = [];
   selectedSizes = [];
   stocks: Stock[] = [];
   totalQuantity: number = 0;
+  msgs: Message[] = [];
 
-  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService) { }
+  constructor(
+    private _router: Router,
+    private route: ActivatedRoute,
+    private productSvc: ProductService,
+    private categorySvc: CategoryService,
+    private confirmationSvc: ConfirmationService) { }
 
   ngOnInit() {
+    this.initProduct();
+  }
+
+  //Initialize product data
+  initProduct() {
     let emptyStock: Stock = new Stock({
       filename: '',
       description: '',
       size: '',
       quantity: 0
     });
+
+    this.stocks = [];
     this.stocks = this.stocks.concat(emptyStock);
     this.newProduct.productCode = this.productSvc.generateUid();
-    this.newProduct.parentId = 1; //To-do: should be dynamic category id
+    this.newProduct.parentId = +this.route.snapshot.params['id'];
     this.newProduct.createdDate = new Date(this.today);
     this.newProduct.totalQuantity = 0;
+    this.categorySvc.getCategoriesById(this.newProduct.parentId)
+      .subscribe((categories) => {
+        this.categories = categories.map((c) => {
+          return {
+            "label": c.name,
+            "value": c.id
+          }
+        })
+      });
   }
 
   //EventEmitter handler from product-upload
@@ -75,6 +105,7 @@ export class ProductNewComponent implements OnInit {
     row.filename = val;
   }
 
+  //Event handler to add another stock row
   onAddStock() {
     let emptyStock: Stock = new Stock({
       filename: '',
@@ -89,9 +120,10 @@ export class ProductNewComponent implements OnInit {
   sumQuantity(): void {
     this.newProduct.totalQuantity = 0;
     for (let s of this.stocks) {
-      this.newProduct.totalQuantity += s.quantity;
+      if (s.description !== '' && s.size !== '') {
+        this.newProduct.totalQuantity += s.quantity;
+      }
     }
-    //return this.newProduct.totalQuantity;
   }
 
   //Submit button to create new product
@@ -118,9 +150,45 @@ export class ProductNewComponent implements OnInit {
       (newProduct) => {
         //this.categories = this.categories.concat(newCategory);
         //this.fetchCategories(this.group.id);
-        alert('Add product successfully');
+        this.showSuccess();
+        this.reset();
       }
-      )
+      );
+
+  }
+
+  //Remove stock event handler
+  removeStock(index: number) {
+    this.confirmationSvc.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'fa fa-trash',
+      accept: () => {
+        this.stocks = this.stocks.filter((val, i) => i != index);
+        this.sumQuantity();
+      },
+      reject: () => { }
+    });
+  }
+
+  //Cancel handler to go back to product list
+  cancel() {
+    this._router.navigate(['/products']);
+  }
+
+  showSuccess() {
+    this.msgs = [];
+    this.msgs.push({ severity: 'success', summary: 'Success Message', detail: 'New Product created!' });
+  }
+
+  //Reset child components and component itself.
+  reset() {
+    this.uploadChild.reset();
+    this.sizeChild.reset();
+    this.colorFiles = [];
+    this.selectedSizes = [];
+
     this.newProduct = new Product();
+    this.initProduct();
   }
 }

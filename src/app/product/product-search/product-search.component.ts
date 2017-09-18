@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from "primeng/primeng";
 import { Router } from "@angular/router";
 
@@ -17,30 +17,37 @@ export class ProductSearchComponent implements OnInit {
   constructor(public _router: Router) {
   }
 
+  @Output()
+  tabSelected = new EventEmitter();
+
   ngOnInit() {
     this.items = [
       {
-        label: 'Stats', icon: 'fa-bar-chart', command: (event) => {
+        label: 'Thoi trang Nu', icon: 'fa-bar-chart', command: (event) => {
           //event.originalEvent: Browser event
           //event.item: menuitem metadata
+          this.tabSelected.emit(1);
         }
       },
       {
-        label: 'Calendar', icon: 'fa-calendar', items: [
-          {
-            label: 'New', icon: 'fa-plus', command: (event) => {
-              //event.originalEvent: Browser event
-              //event.item: menuitem metadata
-            }
-          }
-        ]
+        label: 'Thoi trang Trung nien', icon: 'fa-calendar', command: (event) => {
+          this.tabSelected.emit(2);
+        }
       },
-      { label: 'Documentation', icon: 'fa-book' },
-      { label: 'Support', icon: 'fa-support' }
+      {
+        label: 'Thoi trang be trai', icon: 'fa-book', command: (event) => {
+          this.tabSelected.emit(3);
+        }
+      },
+      {
+        label: 'Thoi trang be gai', icon: 'fa-support', command: (event) => {
+          this.tabSelected.emit(4);
+        }
+      }
     ];
   }
 
-  addProduct() {
+  searchProduct() {
     this._router.navigate(['products/add']);
   }
 

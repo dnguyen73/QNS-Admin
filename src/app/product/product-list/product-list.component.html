@@ -1,4 +1,23 @@
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+</div>
 <p>
-  product-list works!
+  List of products
 </p>
-<button pButton type="button" (click)="addNewProduct()" label="Click"></button>
+<p-dataTable [value]="products" [rows]="10" [paginator]="true" [globalFilter]="gb">
+  <p-column field="productCode" header="Product Code"></p-column>
+  <p-column field="productName" [style]="{'width': '200px'}" header="Name"></p-column>
+<p-column field="totalQuantity" header="Quantity"></p-column>
+<p-column field="price" header="Price"></p-column>
+<p-column field="isOnSale" header="OnSale"></p-column>
+  <p-column styleClass="action">
+      <ng-template pTemplate="header">
+          <button type="button" pButton icon="fa-refresh"></button>
+      </ng-template>
+      <ng-template let-product="rowData" pTemplate="body">
+          <button type="button" pButton (click)="viewDetail(product)" icon="fa-trash"></button>
+      </ng-template>
+  </p-column>
+</p-dataTable>
+<button pButton type="button" (click)="addNewProduct()" label="New Product"></button>

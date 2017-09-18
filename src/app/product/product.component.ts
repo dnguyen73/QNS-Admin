@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
+  parentId: number = 1;
   constructor() { }
 
   ngOnInit() {
   }
 
+  //EventEmitter handler for tab selection
+  onTabSelected(parentId: number) {
+    this.parentId = parentId;
+  }
 }

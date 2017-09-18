@@ -26,13 +26,15 @@ import { FileUploadModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
-import {InputTextModule} from 'primeng/primeng';
-import {DropdownModule} from 'primeng/primeng';
-import {DataGridModule} from 'primeng/primeng';
-import {InputTextareaModule} from 'primeng/primeng';
-import {SpinnerModule} from 'primeng/primeng';
-import {InputSwitchModule} from 'primeng/primeng';
+import { InputTextModule } from 'primeng/primeng';
+import { DropdownModule } from 'primeng/primeng';
+import { DataGridModule } from 'primeng/primeng';
+import { InputTextareaModule } from 'primeng/primeng';
+import { SpinnerModule } from 'primeng/primeng';
+import { InputSwitchModule } from 'primeng/primeng';
+import { MessagesModule } from 'primeng/primeng';
 import { ProductSizeComponent } from './product-size/product-size.component';
+import { ProductStockComponent } from './product-stock/product-stock.component';
 
 @NgModule({
   imports: [
@@ -41,11 +43,12 @@ import { ProductSizeComponent } from './product-size/product-size.component';
     MomentModule,
     RouterModule.forChild([
       { path: 'products', component: ProductComponent },
-      { path: 'products/add', component: ProductNewComponent }
+      { path: 'products/add/:id', component: ProductNewComponent }
     ]),
-    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule, DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule
+    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
+    DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, MessagesModule
   ],
   providers: [ProductService, ConfirmationService],
-  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent]
+  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent, ProductStockComponent]
 })
 export class ProductModule { }

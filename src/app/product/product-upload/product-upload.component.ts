@@ -104,4 +104,10 @@ export class ProductUploadComponent implements OnInit {
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
+
+  //reset component data
+  reset(){
+    this.fileUpload.clear();
+    this.uploadedFiles = [];
+  }
 }

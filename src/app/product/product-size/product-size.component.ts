@@ -51,4 +51,15 @@ export class ProductSizeComponent implements OnInit {
     this.sizeSelected.emit(this.selectedSizes);
   }
 
+  //reset component
+  reset(){
+    this.selectedSizes = [];
+    this.kidSizes.map((s) => {
+      s.selected = false;
+    });
+    this.adultSizes.map((s) => {
+      s.selected = false;
+    });
+  }
+
 }

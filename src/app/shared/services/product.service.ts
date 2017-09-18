@@ -71,14 +71,41 @@ export class ProductService {
   }
 
   /**
+     * Grab all product items from loopback api
+     */
+  getAllProducts(): Observable<Product[]> {
+    return this._http
+      .get(PRODUCT_URL)
+      .map(res => {
+        const product = res.json();
+        return product.map((category) => new Product(category));
+      })
+      .catch(this.handleError);
+  }
+
+  /**
+   * Grab group of category items for given parentId from loopback api
+   */
+  getProductsByParentId(pId: number): Observable<Product[]> {
+    return this._http
+      .get(PRODUCT_URL)
+      .map(res => {
+        const products = res.json();
+        return products
+          .filter(p => p.parentId === pId)
+          .map((product) => new Product(product));
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * Add new product
    * Note: Http post request will be cold if there is not any subcribe() call
    */
   addProduct(product: Product): Observable<Product> {
     return this._http
       .post(PRODUCT_URL, product)
-      .map((res) =>
-      { 
+      .map((res) => {
         return new Product(res.json());
       })
       .catch(this.handleError);
