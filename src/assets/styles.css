@@ -5,3 +5,12 @@
 .ui-tabmenu .ui-widget-header{
 	border: none;
 }
+
+.action-pane{
+	text-align: right;
+	margin: 10px 0;
+}
+
+.category-page, .product-page, .product-detail{
+	padding: 10px 20px;
+}

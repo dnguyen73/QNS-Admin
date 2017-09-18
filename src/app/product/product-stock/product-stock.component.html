@@ -1,3 +1,44 @@
-<p>
-  product-stock works!
-</p>
+<!-- Stock Section -->
+<h4>Product Stock selection</h4>
+<div class="stock-item">
+  <p-dataTable [value]="stocks">
+    <p-column field="filename" header="File Name"></p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Color Description</label>
+      </ng-template>
+      <ng-template let-row="rowData" pTemplate="body">
+        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" placeholder="Select a color"></p-dropdown>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Size Selection</label>
+      </ng-template>
+      <ng-template let-rs="rowData" pTemplate="body">
+        <p-dropdown [options]="selectedSizes" [styleClass]="stock-dropdown" [(ngModel)]="rs.size" placeholder="Select a size"></p-dropdown>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Quantity</label>
+      </ng-template>
+      <ng-template let-row="rowData" pTemplate="body">
+        <!--<input type="number" pInputText [(ngModel)]="row.quantity" (ngChange)="sumQuantity()" />-->
+        <p-spinner size="30" [(ngModel)]="row.quantity" [min]="0" (onChange)="sumQuantity()"></p-spinner>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <button type="button" pButton icon="fa-refresh"></button>
+      </ng-template>
+      <ng-template let-row="rowData" let-i="rowIndex" pTemplate="body">
+        <button type="button" pButton (click)="removeStock(i)" icon="fa-trash"></button>
+      </ng-template>
+    </p-column>
+    <p-footer>Total quantity : {{totalQuantity}}</p-footer>
+  </p-dataTable>
+</div>
+<div class="action-pane">
+  <button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>
+</div>

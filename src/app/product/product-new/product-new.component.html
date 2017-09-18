@@ -1,110 +1,83 @@
-<p-messages [(value)]="msgs"></p-messages>
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-4 ui-sm-4 code-item">{{newProduct.productCode}}</div>
-  <div class="ui-g-12 ui-md-8 ui-sm-4">
-    <p>Created Date : {{today | amDateFormat:'LL'}} - {{newProduct.createdDate}}
-      <input type="text" pInputText [(ngModel)]="newProduct.productName" placeholder="Type in brief product name" />
-  </div>
-</div>
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <label>Category Selection</label>
-  </div>
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <p-dropdown [options]="categories" [(ngModel)]="newProduct.categoryId" placeholder="Select category"></p-dropdown>
-  </div>
-</div>
-<div>
-  <p>Product description</p>
-  <textarea [rows]="5" [cols]="60" pInputTextarea [(ngModel)]="newProduct.description" autoResize="true"></textarea>
-</div>
-<div>
-  <p>Original Vendor</p>
-  <input type="text" pInputText [(ngModel)]="newProduct.originalVendor" placeholder="Type in vendor" />
-</div>
-<div>
-  <product-upload #pUpload (fileSelected)="onFileSelected($event)"></product-upload>
-</div>
-
-<div>
-  <product-size #pSize (sizeSelected)="onSizeSelected($event)"></product-size>
-</div>
-
-<!-- Stock Section -->
-<div class="stock-item">
-  <p-dataTable [value]="stocks">
-    <p-column field="filename" header="File Name"></p-column>
-    <p-column styleClass="action">
-      <ng-template pTemplate="header">
-        <label>Color Description</label>
-      </ng-template>
-      <ng-template let-row="rowData" pTemplate="body">
-        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" placeholder="Select a color"></p-dropdown>
-      </ng-template>
-    </p-column>
-    <p-column styleClass="action">
-      <ng-template pTemplate="header">
-        <label>Size Selection</label>
-      </ng-template>
-      <ng-template let-rs="rowData" pTemplate="body">
-        <p-dropdown [options]="selectedSizes" [styleClass]="stock-dropdown" [(ngModel)]="rs.size" placeholder="Select a size"></p-dropdown>
-      </ng-template>
-    </p-column>
-    <p-column styleClass="action">
-      <ng-template pTemplate="header">
-        <label>Quantity</label>
-      </ng-template>
-      <ng-template let-row="rowData" pTemplate="body">
-        <!--<input type="number" pInputText [(ngModel)]="row.quantity" (ngChange)="sumQuantity()" />-->
-        <p-spinner size="30" [(ngModel)]="row.quantity" [min]="0" (onChange)="sumQuantity()"></p-spinner>
-      </ng-template>
-    </p-column>
-    <p-column styleClass="action">
-      <ng-template pTemplate="header">
-        <button type="button" pButton icon="fa-refresh"></button>
-      </ng-template>
-      <ng-template let-row="rowData" let-i="rowIndex" pTemplate="body">
-        <button type="button" pButton (click)="removeStock(i)" icon="fa-trash"></button>
-      </ng-template>
-    </p-column>
-  </p-dataTable>
-</div>
-
-<div>
-  <label>Total Quantity : {{newProduct.totalQuantity}}</label>
-</div>
-
-<button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>
-
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <label>Unit Price</label>
-  </div>
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <div class="ui-inputgroup">
-      <input type="number" pInputText [(ngModel)]="newProduct.price" placeholder="Price">
-      <span class="ui-inputgroup-addon">VND</span>
+<div class="product-detail">
+  <p-messages [(value)]="msgs"></p-messages>
+  <h4>Product General Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4 code-item">{{newProduct.productCode}}</div>
+    <div class="ui-g-12 ui-md-8 ui-sm-4">
+      <p>Created Date : {{today | amDateFormat:'LL'}} - {{newProduct.createdDate}}
+        <input type="text" pInputText [(ngModel)]="newProduct.productName" placeholder="Type in brief product name" />
     </div>
   </div>
-</div>
-
-<div class="ui-g ui-fluid">
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <label>On Sale?</label>
-  </div>
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <p-inputSwitch onLabel="Sale" offLabel="No Sale" [(ngModel)]="newProduct.isOnSale"></p-inputSwitch>
-  </div>
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <label>Discount</label>
-  </div>
-  <div class="ui-g-12 ui-md-2 ui-sm-2">
-    <div class="ui-inputgroup">
-      <input type="number" pInputText [(ngModel)]="newProduct.discount" placeholder="Price" [disabled]="!newProduct.isOnSale">
-      <span class="ui-inputgroup-addon">%</span>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Category</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-dropdown [options]="categories" [(ngModel)]="newProduct.categoryId" placeholder="Select category"></p-dropdown>
     </div>
   </div>
-</div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Product Description</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <textarea [rows]="5" [cols]="60" pInputTextarea [(ngModel)]="newProduct.description" autoResize="true"></textarea>
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Original Vendor</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <input type="text" pInputText [(ngModel)]="newProduct.originalVendor" placeholder="Type in vendor" />
+    </div>
+  </div>
 
-<button pButton type="button" label="Create Product" (click)="submit()"></button>
-<button pButton type="button" label="Cancel" (click)="cancel()"></button>
+  <div>
+    <product-upload #pUpload (fileSelected)="onFileSelected($event)"></product-upload>
+  </div>
+
+  <div>
+    <product-size #pSize (sizeSelected)="onSizeSelected($event)"></product-size>
+  </div>
+
+  <div>
+    <product-stock #pStock [colorFiles]="colorFiles" [selectedSizes]="selectedSizes" (stockChanged)="onStockChanged($event)"></product-stock>
+  </div>
+
+
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <label>Unit Price</label>
+    </div>
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <div class="ui-inputgroup">
+        <input type="number" pInputText [(ngModel)]="newProduct.price" placeholder="Price">
+        <span class="ui-inputgroup-addon">VND</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <label>On Sale?</label>
+    </div>
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <p-inputSwitch onLabel="Sale" offLabel="No Sale" [(ngModel)]="newProduct.isOnSale"></p-inputSwitch>
+    </div>
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <label>Discount</label>
+    </div>
+    <div class="ui-g-12 ui-md-2 ui-sm-2">
+      <div class="ui-inputgroup">
+        <input type="number" pInputText [(ngModel)]="newProduct.discount" placeholder="Price" [disabled]="!newProduct.isOnSale">
+        <span class="ui-inputgroup-addon">%</span>
+      </div>
+    </div>
+  </div>
+  <div class="action-pane">
+    <button pButton type="button" label="Create Product" (click)="submit()"></button>
+    <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+  </div>
+
+</div>

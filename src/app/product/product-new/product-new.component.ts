@@ -11,6 +11,7 @@ import { SelectColor } from "../../shared/models/selectColor";
 import { CategoryService } from "../../shared/services/category.service";
 import { Category } from "../../shared/models/category";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DropdownItem } from "../../shared/models/dropdownItem";
 
 @Component({
   selector: 'app-product-new',
@@ -22,22 +23,22 @@ export class ProductNewComponent implements OnInit {
 
   @ViewChild('pUpload') uploadChild;
   @ViewChild('pSize') sizeChild;
+  @ViewChild('pStock') stockChild;
 
   today: number = Date.now();
   newProduct: Product = new Product();
   categories = [];
-  colorFiles = [];
-  selectedSizes = [];
+  colorFiles: DropdownItem[] = [];
+  selectedSizes: DropdownItem[] = [];
   stocks: Stock[] = [];
-  totalQuantity: number = 0;
   msgs: Message[] = [];
 
   constructor(
     private _router: Router,
     private route: ActivatedRoute,
     private productSvc: ProductService,
-    private categorySvc: CategoryService,
-    private confirmationSvc: ConfirmationService) { }
+    private categorySvc: CategoryService
+    ) { }
 
   ngOnInit() {
     this.initProduct();
@@ -45,15 +46,7 @@ export class ProductNewComponent implements OnInit {
 
   //Initialize product data
   initProduct() {
-    let emptyStock: Stock = new Stock({
-      filename: '',
-      description: '',
-      size: '',
-      quantity: 0
-    });
-
-    this.stocks = [];
-    this.stocks = this.stocks.concat(emptyStock);
+    
     this.newProduct.productCode = this.productSvc.generateUid();
     this.newProduct.parentId = +this.route.snapshot.params['id'];
     this.newProduct.createdDate = new Date(this.today);
@@ -95,37 +88,6 @@ export class ProductNewComponent implements OnInit {
     }
   }
 
-  //Event handler when color changed on each stock row
-  onColorSelected(e: any, row: Stock) {
-    let val = e.value;
-    let idx = this.colorFiles.map(function (f) {
-      return f.value;
-    }).indexOf(val);
-    row.description = this.colorFiles[idx].label;
-    row.filename = val;
-  }
-
-  //Event handler to add another stock row
-  onAddStock() {
-    let emptyStock: Stock = new Stock({
-      filename: '',
-      description: '',
-      size: '',
-      quantity: 0
-    });
-    this.stocks = this.stocks.concat(emptyStock);
-  }
-
-  //Calculate total quantity once quantity of sub item has changed.
-  sumQuantity(): void {
-    this.newProduct.totalQuantity = 0;
-    for (let s of this.stocks) {
-      if (s.description !== '' && s.size !== '') {
-        this.newProduct.totalQuantity += s.quantity;
-      }
-    }
-  }
-
   //Submit button to create new product
   submit() {
     //assign available sizes
@@ -140,8 +102,9 @@ export class ProductNewComponent implements OnInit {
         description: f.label
       });
     })
-    //assign stocks array list
-    this.newProduct.stocks = this.stocks;
+    //assign stocks array list from product-stock component
+    this.newProduct.stocks = this.stockChild.stocks;
+    this.newProduct.totalQuantity = this.stockChild.totalQuantity;
 
     //Call API service to store product item to database
     this.productSvc
@@ -154,21 +117,6 @@ export class ProductNewComponent implements OnInit {
         this.reset();
       }
       );
-
-  }
-
-  //Remove stock event handler
-  removeStock(index: number) {
-    this.confirmationSvc.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
-      icon: 'fa fa-trash',
-      accept: () => {
-        this.stocks = this.stocks.filter((val, i) => i != index);
-        this.sumQuantity();
-      },
-      reject: () => { }
-    });
   }
 
   //Cancel handler to go back to product list
@@ -185,8 +133,7 @@ export class ProductNewComponent implements OnInit {
   reset() {
     this.uploadChild.reset();
     this.sizeChild.reset();
-    this.colorFiles = [];
-    this.selectedSizes = [];
+    this.stockChild.reset();
 
     this.newProduct = new Product();
     this.initProduct();

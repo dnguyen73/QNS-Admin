@@ -1,0 +1,8 @@
+.stock-item .ui-dropdown{
+    width: 150px !important;
+}
+
+.stock-item .ui-datatable-footer{
+    color: red !important;
+    font-weight: bold;
+}

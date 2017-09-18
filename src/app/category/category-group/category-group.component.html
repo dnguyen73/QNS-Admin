@@ -14,27 +14,29 @@
 </p-fieldset>-->
 
 <h2 class="title-01">{{group.title}}</h2>
-<span class="ui-float-label">
-  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
-  <label for="float-input">Add new category</label>
-</span>
+<div class="new-cate-box">
+  <span class="ui-float-label">
+    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
+    <label for="float-input">Add new category</label>
+  </span>
+</div>
 
-<p-dataTable [value]="categories">
-  <p-column field="parentId" header="Parent ID"></p-column>
-  <p-column field="name" [style]="{'width': '400px'}" header="Name"></p-column>
-  <!--<p-column field="color" header="Color">
+<div>
+  <p-dataTable [value]="categories">
+    <p-column field="parentId" header="Parent ID"></p-column>
+    <p-column field="name" [style]="{'width': '400px'}" header="Name"></p-column>
+    <!--<p-column field="color" header="Color">
       <ng-template let-col let-car="rowData" pTemplate="body">
           <span [style.color]="car[col.field]">{{car[col.field]}}</span>
       </ng-template>
   </p-column>-->
-  <p-column styleClass="action">
+    <p-column styleClass="action">
       <ng-template pTemplate="header">
-          <button type="button" pButton icon="fa-refresh"></button>
+        <button type="button" pButton icon="fa-refresh"></button>
       </ng-template>
       <ng-template let-category="rowData" pTemplate="body">
-          <button type="button" pButton (click)="removeCategory(category)" icon="fa-trash"></button>
+        <button type="button" pButton (click)="removeCategory(category)" icon="fa-trash"></button>
       </ng-template>
-  </p-column>
-</p-dataTable>
-
-
+    </p-column>
+  </p-dataTable>
+</div>

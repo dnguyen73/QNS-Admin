@@ -2,6 +2,9 @@
     (onUpload)="onUploadCompleted($event)" (onSelect)="onSelectCompleted($event, fileUpload)"></p-fileUpload>-->
 <h4>Product Image selection</h4>
 <p-fileUpload #fileUpload name="file" customUpload="true" (onSelect)="onSelectCompleted($event)">
+    <ng-template pTemplate="toolbar">
+            <button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Refresh"></button>
+        </ng-template> 
     <ng-template pTemplate type="content">
         <p-dataTable [value]="uploadedFiles">
             <p-column styleClass="action">
@@ -41,6 +44,5 @@
         </p-dataTable>
     </ng-template>
 </p-fileUpload>
-<button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Refresh"></button>
 
 <p-confirmDialog></p-confirmDialog>

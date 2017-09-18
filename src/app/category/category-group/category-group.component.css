@@ -7,3 +7,8 @@ th.name-heading{
     border-bottom: 1px solid #000;
     margin-bottom: 10px;
 }
+
+.new-cate-box{
+    margin: 20px 0 10px 0;
+    text-align: left;
+}
