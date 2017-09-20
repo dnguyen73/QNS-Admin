@@ -8,7 +8,7 @@
         <label>Color Description</label>
       </ng-template>
       <ng-template let-row="rowData" pTemplate="body">
-        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" placeholder="Select a color"></p-dropdown>
+        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" [(ngModel)]="row.filename" placeholder="Select a color"></p-dropdown>
       </ng-template>
     </p-column>
     <p-column styleClass="action">

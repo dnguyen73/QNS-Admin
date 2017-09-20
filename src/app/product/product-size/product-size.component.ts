@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ProductService } from "../../shared/services/product.service";
 import { Size } from "../../shared/models/size";
 
@@ -15,8 +15,8 @@ export class ProductSizeComponent implements OnInit {
   private selectedSizes: Size[] = [];
   constructor(private productSvc: ProductService) { }
 
-@Output()
-  sizeSelected = new EventEmitter();
+@Input() availableSizes: string[] = [];
+@Output() sizeSelected = new EventEmitter();
   
   ngOnInit() {
     this.fetchAllSizes();
@@ -26,8 +26,18 @@ export class ProductSizeComponent implements OnInit {
     this.productSvc.getAllProductSizes()
       .subscribe((sizes) => {
         this.sizes = sizes;
+        this.sizes.map((size) => {
+          if (this.availableSizes.indexOf(size.label) > -1){
+            size.selected = true;
+            this.selectedSizes.push(size);
+          }
+        });
         this.kidSizes = this.sizes.filter((s) => s.code === "KC");
         this.adultSizes = this.sizes.filter((s) => s.code === "AC");
+        
+        //emit selected sizes
+        this.sizeSelected.emit(this.selectedSizes);
+        
       });
   }
 

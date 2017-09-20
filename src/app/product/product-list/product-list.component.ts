@@ -32,4 +32,8 @@ export class ProductListComponent implements OnInit, OnChanges {
   addNewProduct() {
     this._router.navigate(['products/add', this.parentId]);
   }
+
+  viewDetail(product: Product){
+    this._router.navigate(['products/detail', product.productCode]);
+  }
 }

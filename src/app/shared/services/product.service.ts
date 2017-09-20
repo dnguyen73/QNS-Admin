@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from './../../../environments/environment';
 import { FileObject } from "../models/fileobject";
@@ -84,7 +84,7 @@ export class ProductService {
   }
 
   /**
-   * Grab group of category items for given parentId from loopback api
+   * Grab all product items for given parentId from loopback api
    */
   getProductsByParentId(pId: number): Observable<Product[]> {
     return this._http
@@ -99,12 +99,41 @@ export class ProductService {
   }
 
   /**
+   * Get one product for given product code from loopback api
+   */
+  findProductByCode(code: string): Observable<Product> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('code', code);
+
+    return this._http
+      .get(PRODUCT_URL + "/findByCode", {search: params})
+      .map(res => {
+        const product = res.json();
+        return new Product(product);
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * Add new product
    * Note: Http post request will be cold if there is not any subcribe() call
    */
   addProduct(product: Product): Observable<Product> {
     return this._http
       .post(PRODUCT_URL, product)
+      .map((res) => {
+        return new Product(res.json());
+      })
+      .catch(this.handleError);
+  }
+
+  /**
+   * Update existing product by a new one -> update product properties
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  updateProduct(product: Product): Observable<Product> {
+    return this._http
+      .put(PRODUCT_URL + "/" + product.id, product)
       .map((res) => {
         return new Product(res.json());
       })

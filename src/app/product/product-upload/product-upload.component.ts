@@ -3,7 +3,7 @@ import { FileObject } from "../../shared/models/fileobject";
 import { environment } from './../../../environments/environment';
 import { ConfirmationService, FileUpload } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'product-upload',
@@ -13,14 +13,17 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ProductUploadComponent implements OnInit {
   @ViewChild('fileUpload') fileUpload: FileUpload;
-  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService, private sanitizer:DomSanitizer) { }
-  uploadedFiles: FileObject[] = [];
+  constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    if (this.uploadedFiles.length > 0) {
+      this.onRefresh();
+    }
   }
 
-  @Output()
-  fileSelected = new EventEmitter();
+  @Input() uploadedFiles: FileObject[] = [];
+
+  @Output() fileSelected = new EventEmitter();
 
   // @Output()
   // allFileSelected = new EventEmitter();
@@ -68,11 +71,6 @@ export class ProductUploadComponent implements OnInit {
   //event handler to bind uploadedFiles data to parent component
   //Only item which is selected for Color is emitted
   onRefresh() {
-    // this.fileSelected.emit(
-    //   this.uploadedFiles.filter((f) => {
-    //     return f.isColor && f.description !== "";
-    //   })
-    // );
     this.fileSelected.emit(this.uploadedFiles);
   }
 
@@ -106,7 +104,7 @@ export class ProductUploadComponent implements OnInit {
   }
 
   //reset component data
-  reset(){
+  reset() {
     this.fileUpload.clear();
     this.uploadedFiles = [];
   }

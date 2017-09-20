@@ -35,6 +35,8 @@ import { InputSwitchModule } from 'primeng/primeng';
 import { MessagesModule } from 'primeng/primeng';
 import { ProductSizeComponent } from './product-size/product-size.component';
 import { ProductStockComponent } from './product-stock/product-stock.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductDetailResolve } from "./product-detail/product-detail-resolve.service";
 
 @NgModule({
   imports: [
@@ -43,12 +45,17 @@ import { ProductStockComponent } from './product-stock/product-stock.component';
     MomentModule,
     RouterModule.forChild([
       { path: 'products', component: ProductComponent },
-      { path: 'products/add/:id', component: ProductNewComponent }
+      { path: 'products/add/:id', component: ProductNewComponent },
+      {
+        path: 'products/detail/:code', component: ProductDetailComponent, resolve: {
+          product: ProductDetailResolve
+        },
+      }
     ]),
     TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
     DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, MessagesModule
   ],
-  providers: [ProductService, ConfirmationService],
-  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent, ProductStockComponent]
+  providers: [ProductService, ProductDetailResolve, ConfirmationService],
+  declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent, ProductStockComponent, ProductDetailComponent]
 })
 export class ProductModule { }

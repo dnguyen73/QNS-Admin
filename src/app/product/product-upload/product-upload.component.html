@@ -3,46 +3,48 @@
 <h4>Product Image selection</h4>
 <p-fileUpload #fileUpload name="file" customUpload="true" (onSelect)="onSelectCompleted($event)">
     <ng-template pTemplate="toolbar">
-            <button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Refresh"></button>
-        </ng-template> 
+        <button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Refresh"></button>
+    </ng-template>
     <ng-template pTemplate type="content">
-        <p-dataTable [value]="uploadedFiles">
-            <p-column styleClass="action">
-                <ng-template pTemplate="header">
-                    <label>Image</label>
-                </ng-template>
-                <ng-template let-f="rowData" pTemplate="body">
-                    <div><img [src]="sanitize(f.file.objectURL.changingThisBreaksApplicationSecurity)" width="50px"></div>
-                </ng-template>
-            </p-column>
-            <!--<p-column field="filepath" [style]="{'width': '250px'}" header="Path"></p-column>-->
-            <p-column field="filesize" [style]="{'width': '60px'}" header="Size"></p-column>
-            <p-column styleClass="action">
-                <ng-template pTemplate="header">
-                    <label>Use for Color</label>
-                </ng-template>
-                <ng-template let-f="rowData" pTemplate="body">
-                    <p-checkbox [(ngModel)]="f.isColor" binary="true"></p-checkbox>
-                </ng-template>
-            </p-column>
-            <p-column styleClass="action">
-                <ng-template pTemplate="header">
-                    <label>Color Description</label>
-                </ng-template>
-                <ng-template let-f="rowData" pTemplate="body">
-                    <input type="text" pInputText [(ngModel)]="f.description" />
-                </ng-template>
-            </p-column>
-            <p-column styleClass="action">
-                <ng-template pTemplate="header">
-                    <button type="button" pButton icon="fa-refresh"></button>
-                </ng-template>
-                <ng-template let-file="rowData" pTemplate="body">
-                    <button type="button" pButton (click)="removeFile(file)" icon="fa-trash"></button>
-                </ng-template>
-            </p-column>
-        </p-dataTable>
+
     </ng-template>
 </p-fileUpload>
+
+<p-dataTable [value]="uploadedFiles">
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <label>Image</label>
+        </ng-template>
+        <ng-template let-f="rowData" pTemplate="body">
+            <div><img [src]="sanitize(f.file.objectURL.changingThisBreaksApplicationSecurity)" width="50px"></div>
+        </ng-template>
+    </p-column>
+    <!--<p-column field="filepath" [style]="{'width': '250px'}" header="Path"></p-column>-->
+    <p-column field="filesize" [style]="{'width': '60px'}" header="Size"></p-column>
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <label>Use for Color</label>
+        </ng-template>
+        <ng-template let-f="rowData" pTemplate="body">
+            <p-checkbox [(ngModel)]="f.isColor" binary="true"></p-checkbox>
+        </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <label>Color Description</label>
+        </ng-template>
+        <ng-template let-f="rowData" pTemplate="body">
+            <input type="text" pInputText [(ngModel)]="f.description" />
+        </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <button type="button" pButton icon="fa-refresh"></button>
+        </ng-template>
+        <ng-template let-file="rowData" pTemplate="body">
+            <button type="button" pButton (click)="removeFile(file)" icon="fa-trash"></button>
+        </ng-template>
+    </p-column>
+</p-dataTable>
 
 <p-confirmDialog></p-confirmDialog>

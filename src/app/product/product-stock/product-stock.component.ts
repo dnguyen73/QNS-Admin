@@ -12,20 +12,23 @@ import { ConfirmationService } from "primeng/primeng";
 export class ProductStockComponent implements OnInit {
 
   constructor(private confirmationSvc: ConfirmationService) { }
-  stocks: Stock[] = [];
+
   totalQuantity: number = 0;
 
-  @Input()
-  colorFiles: DropdownItem[];
+  @Input() stocks: Stock[] = [];
 
-  @Input()
-  selectedSizes: DropdownItem[];
+  @Input() colorFiles: DropdownItem[];
+
+  @Input() selectedSizes: DropdownItem[];
 
   ngOnInit() {
-    this.initStock();
+    if (this.stocks.length === 0) {
+      this.initStock();
+    }
+    this.sumQuantity();
   }
 
-  initStock(){
+  initStock() {
     let emptyStock: Stock = new Stock({
       filename: '',
       description: '',
@@ -33,7 +36,7 @@ export class ProductStockComponent implements OnInit {
       quantity: 0
     });
 
-    this.stocks = [];
+    //this.stocks = [];
     this.stocks = this.stocks.concat(emptyStock);
   }
 
@@ -83,7 +86,7 @@ export class ProductStockComponent implements OnInit {
   }
 
   //Reset the component
-  reset(){
+  reset() {
     this.initStock();
     this.colorFiles = [];
     this.selectedSizes = [];
