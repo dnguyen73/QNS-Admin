@@ -4,6 +4,7 @@ import { environment } from './../../../environments/environment';
 import { ConfirmationService, FileUpload } from "primeng/primeng";
 import { ProductService } from "../../shared/services/product.service";
 import { DomSanitizer } from '@angular/platform-browser';
+import { Stock } from "../../shared/models/stock";
 
 @Component({
   selector: 'product-upload',
@@ -11,22 +12,20 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./product-upload.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProductUploadComponent implements OnInit {
+export class ProductUploadComponent implements OnInit{
   @ViewChild('fileUpload') fileUpload: FileUpload;
   constructor(private productSvc: ProductService, private confirmationSvc: ConfirmationService, private sanitizer: DomSanitizer) { }
+
+  @Input() uploadedFiles: FileObject[] = [];
+  @Input() container: string = "";
+
+  @Output() fileSelected = new EventEmitter();
 
   ngOnInit() {
     if (this.uploadedFiles.length > 0) {
       this.onRefresh();
     }
   }
-
-  @Input() uploadedFiles: FileObject[] = [];
-
-  @Output() fileSelected = new EventEmitter();
-
-  // @Output()
-  // allFileSelected = new EventEmitter();
 
   //Upload Completed event handler: To update the files list
   onUploadHandler(event) {
@@ -56,7 +55,8 @@ export class ProductUploadComponent implements OnInit {
       for (let file of event.files) {
         let f = new FileObject({
           filename: file.name,
-          filepath: environment.FILE_HOST_URL + "/1/" + file.name,
+          //filepath: environment.FILE_HOST_URL + "/1/" + file.name,
+          filepath: file.objectURL.changingThisBreaksApplicationSecurity,
           filesize: file.size,
           isColor: false,
           description: "",
@@ -81,17 +81,32 @@ export class ProductUploadComponent implements OnInit {
       header: 'Delete Confirmation',
       icon: 'fa fa-trash',
       accept: () => {
-        //this.productSvc
-        //.removeProductImage("1", f.filename)
-        //.subscribe(
-        //() => {
-        let index = this.uploadedFiles.map(function (file) {
-          return file.filename;
-        }).indexOf(f.filename);
-        this.uploadedFiles = this.uploadedFiles.filter((val, i) => i != index);
-        this.onRefresh();
-        //}
-        //)
+        //Check the select file is in used?
+        //let inUsed = (this.uploadedFiles.filter((f) => f.isColor === f.filename).length) > 0;
+        if (!f.isColor) {
+          //remove item in display file list
+          let index = this.uploadedFiles.map(function (file) {
+            return file.filename;
+          }).indexOf(f.filename);
+          this.uploadedFiles = this.uploadedFiles.filter((val, i) => i != index);
+
+          //Call API to remove image from cloud storage
+          if (f.filepath.indexOf('blob:') < 0) {
+            this.productSvc
+              .removeProductImage(this.container, f.filename)
+              .subscribe(
+              () => {
+
+              });
+          }
+
+          //refresh list
+          this.onRefresh();
+        }
+        else {
+          alert('Can not delete as the file is in used');
+        }
+
       },
       reject: () => { }
     });

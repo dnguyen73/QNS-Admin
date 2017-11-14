@@ -1,0 +1,176 @@
+<div class="order-detail">
+  <h4>Order General Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4 code-item">#{{myOrder.orderCode}}#</div>
+    <div class="ui-g-12 ui-md-8 ui-sm-4">
+      <p>Created Date : {{myOrder.orderDate}}
+    </div>
+  </div>
+
+  <h4>Order Shipping Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Customer name:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.userInfo.fullname}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Email:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.userInfo.email}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Phone:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.userInfo.phone}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Address:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.userInfo.address}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Province:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.userInfo.province}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Notes:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.notes}}
+    </div>
+  </div>
+
+  <h4>Cart Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Number of Items:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{numOfItems()}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Sub Total:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.orderAmount | vnd}}
+    </div>
+  </div>
+
+  <p-dataTable [value]="myOrder.items">
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Image</label>
+      </ng-template>
+      <ng-template let-i="rowData" pTemplate="body">
+        <div><img [src]="sanitize(getImagePath(i))" width="50px"></div>
+      </ng-template>
+    </p-column>
+    <!--<p-column field="filepath" [style]="{'width': '250px'}" header="Path"></p-column>-->
+    <!--<p-column field="filesize" [style]="{'width': '60px'}" header="Size"></p-column>-->
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Product Info</label>
+      </ng-template>
+      <ng-template let-i="rowData" pTemplate="body">
+        <div class="product-details">
+          <!--<product-info>-->
+          <a class="product-link">
+            <div data-ui="brand-name"><strong>{{i.product.productName}}</strong></div>
+            <div data-ui="item-name">{{i.product.description}}</div>
+          </a>
+          <div data-ui="item-color">{{i.color}}</div>
+          <div data-ui="item-size">{{i.size}}</div>
+          <div data-ui="item-sku" class="sku">#{{i.product.productCode}}</div>
+          <!--</product-info>-->
+        </div>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Quantity</label>
+      </ng-template>
+      <ng-template let-i="rowData" pTemplate="body">
+        <div *ngIf="!myOrder.paymentStatus">
+          <input type="text" pInputText [(ngModel)]="i.quantity" (ngModelChange)="updateQty(i)" />
+        </div>
+        <div *ngIf="myOrder.paymentStatus">
+          {{i.quantity}}
+        </div>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Unit Price</label>
+      </ng-template>
+      <ng-template let-i="rowData" pTemplate="body">
+        <div data-ui="item-size">{{i.unitPrice | vnd}}</div>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="action">
+      <ng-template pTemplate="header">
+        <label>Item Total</label>
+      </ng-template>
+      <ng-template let-i="rowData" pTemplate="body">
+        <div data-ui="item-size">{{itemSubTotal(i) | vnd}}</div>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+
+  <h4>Amount Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Sub Total:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.orderAmount | vnd}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Shipping Amount:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.shippingFee | vnd}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Grand Total:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{(myOrder.orderAmount + myOrder.shippingFee) | vnd}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Payment status:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myOrder.paymentStatus}}
+    </div>
+  </div>
+
+  <div class="action-pane">
+    <button  *ngIf="!myOrder.paymentStatus" pButton type="button" label="Hoan Tat" (click)="complete()"></button>
+    <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+  </div>
+</div>

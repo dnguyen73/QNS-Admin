@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit, OnChanges {
     }
   }
 
-//Get all products belong to given parent id
+  //Get all products belong to given parent id
   fetchProducts(parentId: number) {
     this.productSvc.getProductsByParentId(parentId)
       .subscribe((products) => this.products = products);

@@ -34,7 +34,7 @@
   </div>
 
   <div>
-    <product-upload #pUpload (fileSelected)="onFileSelected($event)"></product-upload>
+    <product-upload #pUpload (fileSelected)="onFileSelected($event)" [container]="newProduct.parentId"></product-upload>
   </div>
 
   <div>
@@ -68,10 +68,22 @@
     <div class="ui-g-12 ui-md-2 ui-sm-2">
       <label>Discount</label>
     </div>
-    <div class="ui-g-12 ui-md-2 ui-sm-2">
-      <div class="ui-inputgroup">
-        <input type="number" pInputText [(ngModel)]="newProduct.discount" placeholder="Price" [disabled]="!newProduct.isOnSale">
-        <span class="ui-inputgroup-addon">%</span>
+    <div class="ui-g-12 ui-md-6 ui-sm-6">
+      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val1" [(ngModel)]="selectedValue" label="New Price"></p-radioButton>
+      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val2" [(ngModel)]="selectedValue" label="Discount Percentage"></p-radioButton>
+      <div *ngIf="selectedValue=='val1'">
+        <div class="ui-inputgroup">
+          <input type="number" pInputText [(ngModel)]="newProduct.discountPrice" placeholder="Price">
+          <span class="ui-inputgroup-addon">VND</span>
+        </div>
+        <span> ({{getDiscountPercent(newProduct.discountPrice)}} %)</span>
+      </div>
+      <div *ngIf="selectedValue=='val2'">
+        <div class="ui-inputgroup">
+          <input type="number" pInputText [(ngModel)]="newProduct.discountPercent" placeholder="%">
+          <span class="ui-inputgroup-addon">%</span>
+        </div>
+        <span> ({{getDiscountPrice(newProduct.discountPercent)}} VND)</span>
       </div>
     </div>
   </div>

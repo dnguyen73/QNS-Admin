@@ -30,7 +30,6 @@ export class ProductNewComponent implements OnInit {
   categories = [];
   colorFiles: DropdownItem[] = [];
   selectedSizes: DropdownItem[] = [];
-  stocks: Stock[] = [];
   msgs: Message[] = [];
 
   constructor(
@@ -38,7 +37,7 @@ export class ProductNewComponent implements OnInit {
     private route: ActivatedRoute,
     private productSvc: ProductService,
     private categorySvc: CategoryService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.initProduct();
@@ -46,7 +45,7 @@ export class ProductNewComponent implements OnInit {
 
   //Initialize product data
   initProduct() {
-    
+
     this.newProduct.productCode = this.productSvc.generateUid();
     this.newProduct.parentId = +this.route.snapshot.params['id'];
     this.newProduct.createdDate = new Date(this.today);
@@ -75,6 +74,9 @@ export class ProductNewComponent implements OnInit {
         });
       }
     }
+    setTimeout(() => {
+      this.stockChild.updateStock();
+    });
   }
 
   //EventEmitter handler from product-size component
@@ -86,6 +88,23 @@ export class ProductNewComponent implements OnInit {
         value: i.label
       });
     }
+    setTimeout(() => {
+      this.stockChild.updateStock();
+    });
+  }
+
+  //Calculate discount percent based on new price
+  getDiscountPercent(newPrice: number){
+    let p = Math.round((newPrice / this.newProduct.price) * 100);
+    this.newProduct.discountPercent = p;
+    return p;
+  }
+
+  //Calculate discount percent based on new price
+  getDiscountPrice(percentage: number){
+    let p = Math.round((this.newProduct.price*percentage) / 100);
+    this.newProduct.discountPrice = p;
+    return p;
   }
 
   //Submit button to create new product
@@ -106,18 +125,28 @@ export class ProductNewComponent implements OnInit {
     this.newProduct.stocks = this.stockChild.stocks;
     this.newProduct.totalQuantity = this.stockChild.totalQuantity;
 
-    //Call API service to store product item to database
+    //Call API to upload selected files
     this.productSvc
-      .addProduct(this.newProduct)
-      .subscribe(
-      (newProduct) => {
-        //this.categories = this.categories.concat(newCategory);
-        //this.fetchCategories(this.group.id);
-        this.showSuccess();
-        this.reset();
-      }
-      );
-  }
+      .uploadProductImages(this.newProduct.parentId.toString(), this.newProduct.images)
+      .subscribe((result) => {
+        for (let i in result) {
+          this.newProduct.images[i].thumbnail = environment.FILE_HOST_URL + "/" + result[i].container + "/thumb/" + result[i].name;
+          this.newProduct.images[i].filepath = environment.FILE_HOST_URL + "/" + result[i].container + "/" + result[i].name;
+        }
+
+        //Call API service to store product item to database
+        this.productSvc
+          .addProduct(this.newProduct)
+          .subscribe(
+          (newProduct) => {
+            this.showSuccess();
+            this.reset();
+          }
+          );
+      });
+
+
+  }// End of Submit func
 
   //Cancel handler to go back to product list
   cancel() {

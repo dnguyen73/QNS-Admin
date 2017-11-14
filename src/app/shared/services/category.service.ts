@@ -3,13 +3,14 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Category } from './../models/category';
 import { environment } from './../../../environments/environment';
+import { HttpClient } from "./http-client.service";
 
 const CATEGORY_URL: string = environment.apiUrl + '/categories';
 
 @Injectable()
 export class CategoryService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   /**
    * Grab all category items from loopback api

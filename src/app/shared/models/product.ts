@@ -15,7 +15,8 @@ export class Product {
     stocks: Stock[];
     totalQuantity: number;
     isOnSale: boolean;
-    discount: number;
+    discountPrice: number;
+    discountPercent: number;
     createdDate: Date;
     originalVendor: string;
 

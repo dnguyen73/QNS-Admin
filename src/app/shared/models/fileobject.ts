@@ -2,6 +2,7 @@
 export class FileObject {
     filename: string;
     filepath: string;
+    thumbnail: string;
     filesize: number;
     isColor: boolean;
     description: string;

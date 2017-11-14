@@ -70,6 +70,10 @@ export class ProductDetailComponent implements OnInit {
         });
       }
     }
+
+    setTimeout(() => {
+      this.stockChild.updateStock();
+    });
   }
 
   //EventEmitter handler from product-size component
@@ -81,6 +85,24 @@ export class ProductDetailComponent implements OnInit {
         value: i.label
       });
     }
+    //update stock
+    setTimeout(() => {
+      this.stockChild.updateStock();
+    });
+  }
+
+  //Calculate discount percent based on new price
+  getDiscountPercent(newPrice: number){
+    let p = Math.round((newPrice / this.myProduct.price) * 100);
+    this.myProduct.discountPercent = p;
+    return p;
+  }
+
+  //Calculate discount percent based on new price
+  getDiscountPrice(percentage: number){
+    let p = Math.round((this.myProduct.price*percentage) / 100);
+    this.myProduct.discountPrice = p;
+    return p;
   }
 
   //Submit button to update product
@@ -101,17 +123,30 @@ export class ProductDetailComponent implements OnInit {
     this.myProduct.stocks = this.stockChild.stocks;
     this.myProduct.totalQuantity = this.stockChild.totalQuantity;
 
-    //Call API service to store product item to database
+    //Call API to upload selected files
     this.productSvc
-      .updateProduct(this.myProduct)
-      .subscribe(
-      (newProduct) => {
-        //this.categories = this.categories.concat(newCategory);
-        //this.fetchCategories(this.group.id);
-        this.showSuccess();
-        //this.reset();
-      }
-      );
+      .uploadProductImages(this.myProduct.parentId.toString(), this.myProduct.images)
+      .subscribe((result) => {
+        for (let i in result) {
+          for (let img of this.myProduct.images){
+            if (img.filename === result[i].name){
+              img.thumbnail = environment.FILE_HOST_URL + "/" + result[i].container + "/thumb/" + result[i].name;
+              img.filepath = environment.FILE_HOST_URL + "/" + result[i].container + "/" + result[i].name;
+            }
+          }
+          
+        }
+
+        //Call API service to store product item to database
+        this.productSvc
+          .updateProduct(this.myProduct)
+          .subscribe(
+          (newProduct) => {
+            this.showSuccess();
+          });
+      });
+
+
   }
 
   //Cancel handler to go back to product list

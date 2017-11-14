@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/primeng';
 import { FieldsetModule, ButtonModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+import { AuthGuard } from "../shared/services/auth-guard.service";
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: 'categories', component: CategoryComponent }
+      { path: '', component: CategoryComponent, canActivate: [AuthGuard]  }
     ]),
     InputTextModule,
     FieldsetModule, ButtonModule, DataTableModule, SharedModule,

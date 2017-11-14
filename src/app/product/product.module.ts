@@ -32,11 +32,14 @@ import { DataGridModule } from 'primeng/primeng';
 import { InputTextareaModule } from 'primeng/primeng';
 import { SpinnerModule } from 'primeng/primeng';
 import { InputSwitchModule } from 'primeng/primeng';
+import {RadioButtonModule} from 'primeng/primeng';
 import { MessagesModule } from 'primeng/primeng';
 import { ProductSizeComponent } from './product-size/product-size.component';
 import { ProductStockComponent } from './product-stock/product-stock.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailResolve } from "./product-detail/product-detail-resolve.service";
+import { AuthGuard } from "../shared/services/auth-guard.service";
+import { CategoryService } from "../shared/services/category.service";
 
 @NgModule({
   imports: [
@@ -44,18 +47,18 @@ import { ProductDetailResolve } from "./product-detail/product-detail-resolve.se
     FormsModule,
     MomentModule,
     RouterModule.forChild([
-      { path: 'products', component: ProductComponent },
-      { path: 'products/add/:id', component: ProductNewComponent },
+      { path: '', component: ProductComponent, canActivate: [AuthGuard] },
+      { path: 'add/:id', component: ProductNewComponent, canActivate: [AuthGuard] },
       {
-        path: 'products/detail/:code', component: ProductDetailComponent, resolve: {
+        path: 'detail/:code', component: ProductDetailComponent, resolve: {
           product: ProductDetailResolve
         },
       }
     ]),
     TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
-    DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, MessagesModule
+    DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, RadioButtonModule, MessagesModule
   ],
-  providers: [ProductService, ProductDetailResolve, ConfirmationService],
+  providers: [ProductService, ProductDetailResolve, CategoryService, ConfirmationService],
   declarations: [ProductComponent, ProductSectionComponent, ProductSearchComponent, ProductListComponent, FilterSectionComponent, FilterCategoryComponent, FilterSizeComponent, FilterPriceComponent, FilterSaleComponent, ProductNewComponent, ProductUploadComponent, ProductSizeComponent, ProductStockComponent, ProductDetailComponent]
 })
 export class ProductModule { }

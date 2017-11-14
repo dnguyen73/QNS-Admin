@@ -1,0 +1,29 @@
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+</div>
+<p>
+    List of reviews
+</p>
+<p-dataTable [value]="reviews" [rows]="10" [paginator]="true" [globalFilter]="gb">
+    <p-column field="productCode" header="Product Code"></p-column>
+    <p-column styleClass="">
+        <ng-template pTemplate="header">
+            <span>Date</span>
+        </ng-template>
+        <template let-review="rowData" pTemplate type="body">
+            <span class="col-date">{{ review.createdDate | date:'dd/MM/yyyy' }}</span>
+        </template>
+    </p-column>
+    <p-column field="name" header="Reviewer"></p-column>
+    <p-column field="rating" header="Rating"></p-column>
+    <p-column field="comment" header="Comments"></p-column>
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <button type="button" pButton icon="fa-refresh"></button>
+        </ng-template>
+        <ng-template let-review="rowData" pTemplate="body">
+            <button type="button" pButton (click)="viewDetail(review)" icon="fa-pencil"></button>
+        </ng-template>
+    </p-column>
+</p-dataTable>

@@ -16,7 +16,7 @@
             <label>Image</label>
         </ng-template>
         <ng-template let-f="rowData" pTemplate="body">
-            <div><img [src]="sanitize(f.file.objectURL.changingThisBreaksApplicationSecurity)" width="50px"></div>
+            <div><img [src]="sanitize(f.filepath)" width="50px"></div>
         </ng-template>
     </p-column>
     <!--<p-column field="filepath" [style]="{'width': '250px'}" header="Path"></p-column>-->

@@ -5,6 +5,7 @@ import { environment } from './../../../environments/environment';
 import { FileObject } from "../models/fileobject";
 import { Size } from "../models/size";
 import { Product } from "../models/product";
+import { HttpClient } from "./http-client.service";
 
 const FILE_URL: string = environment.apiUrl + '/attachments';
 const SIZE_URL: string = environment.apiUrl + '/sizes';
@@ -13,7 +14,7 @@ const PRODUCT_URL: string = environment.apiUrl + '/products';
 @Injectable()
 export class ProductService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient, private _httpOrigin: Http) { }
 
   /**
      * Generate product code randomly by A..Z0..9
@@ -30,7 +31,7 @@ export class ProductService {
   }
 
   /**
-   * Delete product image by given comtainer and filename
+   * Delete product image by given container and filename
    * Note: Http post request will be cold if there is not any subcribe() call
    */
   removeProductImage(container: string, filename: string): any {
@@ -41,19 +42,60 @@ export class ProductService {
   }
 
   /**
-   * Upload product image to given comtainer
+   * Upload product image to given container
    * Note: Http post request will be cold if there is not any subcribe() call
    */
-  uploadProductImage(container: string, file: any): any {
+  uploadProductImage(container: string, file: any): Observable<any> {
     let formData = new FormData();
-    formData.append('file', file);
-    return this._http
-      .post(FILE_URL + "/" + container + "/upload", formData)
-      .map((res) => {
-        console.log(JSON.stringify(res));
-        return res.json().result.files.file[0];
-      })
-      .catch(this.handleError);
+    let tobeUploaded = false;
+    //Don't upload image file which is not existing on cloud storage
+    if (file.filepath.indexOf('blob:') > -1) {
+      formData.append('file', file);
+      tobeUploaded = true;
+    }
+
+    if (tobeUploaded) {
+      return this._http
+        .postFormData(FILE_URL + "/" + container + "/upload", formData)
+        .map((res) => {
+          console.log(JSON.stringify(res));
+          return res.json().result.files.file[0];
+        })
+        .catch(this.handleError);
+    }
+    else {
+      return Observable.of<any[]>([]);
+    }
+
+  }
+
+  /**
+   * Upload list of product images to given container
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  uploadProductImages(container: string, files: FileObject[]): Observable<any[]> {
+    let formData = new FormData();
+    let tobeUploaded = false;
+    for (let item of files) {
+      //Don't upload image file which is not existing on cloud storage
+      if (item.filepath.indexOf('blob:') > -1) {
+        formData.append('file', item.file);
+        tobeUploaded = true;
+      }
+    }
+
+    if (tobeUploaded) {
+      return this._http
+        .postFormData(FILE_URL + "/" + container + "/upload", formData)
+        .map((res) => {
+          console.log(JSON.stringify(res));
+          return res.json().result.files.file;
+        })
+        .catch(this.handleError);
+    } else {
+      return Observable.of<any[]>([]);
+    }
+
   }
 
   /**
@@ -78,7 +120,7 @@ export class ProductService {
       .get(PRODUCT_URL)
       .map(res => {
         const product = res.json();
-        return product.map((category) => new Product(category));
+        return product.map((product) => new Product(product));
       })
       .catch(this.handleError);
   }
@@ -106,7 +148,7 @@ export class ProductService {
     params.set('code', code);
 
     return this._http
-      .get(PRODUCT_URL + "/findByCode", {search: params})
+      .getWithParams(PRODUCT_URL + "/findByCode", params)
       .map(res => {
         const product = res.json();
         return new Product(product);

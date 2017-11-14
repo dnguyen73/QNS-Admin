@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
 import { Stock } from "../../shared/models/stock";
 import { DropdownItem } from "../../shared/models/dropdownItem";
 import { ConfirmationService } from "primeng/primeng";
@@ -20,6 +20,7 @@ export class ProductStockComponent implements OnInit {
   @Input() colorFiles: DropdownItem[];
 
   @Input() selectedSizes: DropdownItem[];
+
 
   ngOnInit() {
     if (this.stocks.length === 0) {
@@ -85,8 +86,28 @@ export class ProductStockComponent implements OnInit {
     }
   }
 
+  //Recalculate stock[] when either colorFiles or sizeSelected has been changed.
+  updateStock(): void {
+    for (let stock of this.stocks){
+      let colorInUsed = (this.colorFiles.filter((c) => c.label === stock.description)).length > 0;
+      let sizeInUsed = (this.selectedSizes.filter((s) => s.label === stock.size)).length > 0;
+      if (!colorInUsed){
+        stock.filename = '';
+        stock.description = '';
+        stock.quantity = 0;
+      }
+      if (!sizeInUsed){
+        stock.size = '';
+        stock.quantity = 0;
+      }
+
+    }
+    this.sumQuantity();
+  }
+
   //Reset the component
   reset() {
+    this.stocks = [];
     this.initStock();
     this.colorFiles = [];
     this.selectedSizes = [];
