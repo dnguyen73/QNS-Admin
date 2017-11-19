@@ -11,4 +11,8 @@ th.name-heading{
 .new-cate-box{
     margin: 20px 0 10px 0;
     text-align: left;
+    list-style: none;
+}
+.new-cate-box li{
+    display: inline-block;
 }

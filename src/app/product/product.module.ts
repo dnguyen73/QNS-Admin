@@ -41,6 +41,8 @@ import { ProductDetailResolve } from "./product-detail/product-detail-resolve.se
 import { AuthGuard } from "../shared/services/auth-guard.service";
 import { CategoryService } from "../shared/services/category.service";
 
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { CategoryService } from "../shared/services/category.service";
         },
       }
     ]),
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
     DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, RadioButtonModule, MessagesModule
   ],

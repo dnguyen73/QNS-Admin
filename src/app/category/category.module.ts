@@ -11,8 +11,10 @@ import { CategoryService } from './../shared/services/category.service';
 import { InputTextModule } from 'primeng/primeng';
 import { FieldsetModule, ButtonModule } from 'primeng/primeng';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
-import { ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+import { ConfirmDialogModule, ConfirmationService, MessagesModule } from 'primeng/primeng';
 import { AuthGuard } from "../shared/services/auth-guard.service";
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { CategoryDetailResolve } from "./category-detail/category-detail-resolve.service";
 
 
 @NgModule({
@@ -20,13 +22,18 @@ import { AuthGuard } from "../shared/services/auth-guard.service";
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: '', component: CategoryComponent, canActivate: [AuthGuard]  }
+      { path: '', component: CategoryComponent, canActivate: [AuthGuard]  },
+      {
+        path: 'detail/:id', component: CategoryDetailComponent, resolve: {
+          category: CategoryDetailResolve
+        },
+      }
     ]),
     InputTextModule,
-    FieldsetModule, ButtonModule, DataTableModule, SharedModule,
+    FieldsetModule, ButtonModule, DataTableModule, SharedModule, MessagesModule,
     ConfirmDialogModule
   ],
-  declarations: [CategoryComponent, CategoryGroupComponent],
-  providers: [CategoryService, ConfirmationService]
+  declarations: [CategoryComponent, CategoryGroupComponent, CategoryDetailComponent],
+  providers: [CategoryService, CategoryDetailResolve, ConfirmationService]
 })
 export class CategoryModule { }

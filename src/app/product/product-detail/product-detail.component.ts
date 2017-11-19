@@ -49,7 +49,7 @@ export class ProductDetailComponent implements OnInit {
           .subscribe((categories) => {
             this.categories = categories.map((c) => {
               return {
-                "label": c.name,
+                "label": (c.label)? c.name + " (" + c.label + ")" : c.name,
                 "value": c.id
               }
             })

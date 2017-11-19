@@ -1,30 +1,24 @@
-<!--<p-fieldset legend="{{group.title}}" [toggleable]="true">
-  <span class="ui-float-label">
-    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
-    <label for="float-input">Add new category</label>
-  </span>
-  <section class="main" *ngIf="categories.length > 0">
-    <div class="category-list">
-      <div class="ui-inputgroup" *ngFor="let category of categories">
-        <label>{{category.name}}</label>
-        <button pButton type="button" icon="fa-close" class="ui-button-danger" (click)="removeCategory(category)"></button>
-      </div>
-    </div>
-  </section>
-</p-fieldset>-->
-
 <h2 class="title-01">{{group.title}}</h2>
-<div class="new-cate-box">
-  <span class="ui-float-label">
-    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name" (keyup.enter)="addCategory()"> 
+<ul class="new-cate-box">
+  <li><span class="ui-float-label">
+    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name"> 
     <label for="float-input">Add new category</label>
   </span>
-</div>
+  </li>
+  <li><span class="ui-float-label">
+    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.label"> 
+    <label for="float-input">Add new label</label>
+  </span>
+  </li>
+  <li><button pButton type="button" label="Add Category" (click)="addCategory()"></button></li>
+</ul>
 
 <div>
   <p-dataTable [value]="categories">
     <p-column field="parentId" header="Parent ID"></p-column>
-    <p-column field="name" [style]="{'width': '400px'}" header="Name"></p-column>
+    <p-column field="name" [style]="{'width': '300px'}" header="Name"></p-column>
+    <p-column field="label" header="Label"></p-column>
+    <p-column field="route" header="Route Name"></p-column>
     <!--<p-column field="color" header="Color">
       <ng-template let-col let-car="rowData" pTemplate="body">
           <span [style.color]="car[col.field]">{{car[col.field]}}</span>
@@ -36,6 +30,7 @@
       </ng-template>
       <ng-template let-category="rowData" pTemplate="body">
         <button type="button" pButton (click)="removeCategory(category)" icon="fa-trash"></button>
+        <button type="button" pButton (click)="viewDetail(category)" icon="fa-pencil"></button>
       </ng-template>
     </p-column>
   </p-dataTable>

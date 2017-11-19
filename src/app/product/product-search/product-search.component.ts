@@ -23,24 +23,24 @@ export class ProductSearchComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Thoi trang Nu', icon: 'fa-bar-chart', command: (event) => {
+        label: 'Thời trang nữ', icon: 'fa-bar-chart', command: (event) => {
           //event.originalEvent: Browser event
           //event.item: menuitem metadata
           this.tabSelected.emit(1);
         }
       },
       {
-        label: 'Thoi trang Trung nien', icon: 'fa-calendar', command: (event) => {
+        label: 'Thời trang trung niên', icon: 'fa-calendar', command: (event) => {
           this.tabSelected.emit(2);
         }
       },
       {
-        label: 'Thoi trang be trai', icon: 'fa-book', command: (event) => {
+        label: 'Thời trang trẻ em', icon: 'fa-book', command: (event) => {
           this.tabSelected.emit(3);
         }
       },
       {
-        label: 'Thoi trang be gai', icon: 'fa-support', command: (event) => {
+        label: 'Phụ kiện', icon: 'fa-support', command: (event) => {
           this.tabSelected.emit(4);
         }
       }

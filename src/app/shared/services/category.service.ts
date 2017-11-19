@@ -26,6 +26,18 @@ export class CategoryService {
   }
 
   /**
+   * Get category by Id from loopback api
+   */
+  findCategoryById(id: string): Observable<Category> {
+    return this._http
+      .get(CATEGORY_URL + "/" + id)
+      .map(res => {
+        return new Category(res.json());
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * Grab group of category items for given parentId from loopback api
    */
   getCategoriesById(pId: number): Observable<Category[]> {
@@ -62,6 +74,19 @@ export class CategoryService {
     return this._http
       .delete(CATEGORY_URL + "/" + categoryId)
       .map((res) => null)
+      .catch(this.handleError);
+  }
+
+  /**
+   * Update existing category by a new one -> update category properties
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  updateCategory(category: Category): Observable<Category> {
+    return this._http
+      .put(CATEGORY_URL + "/" + category.id, category)
+      .map((res) => {
+        return new Category(res.json());
+      })
       .catch(this.handleError);
   }
 

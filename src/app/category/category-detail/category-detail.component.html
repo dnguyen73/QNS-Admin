@@ -1,0 +1,42 @@
+<div class="category-detail">
+  <p-messages [(value)]="msgs"></p-messages>
+  <h4>Category Info</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Category Parent ID:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      {{myCat.parentId}}
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Category Name:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <input type="text" pInputText [(ngModel)]="myCat.name" />
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Label:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <input type="text" pInputText [(ngModel)]="myCat.label" />
+    </div>
+  </div>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <p-header>Route Name:</p-header>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-sm-4">
+      <input type="text" pInputText [(ngModel)]="myCat.route" />
+    </div>
+  </div>
+
+
+  <div class="action-pane">
+    <button pButton type="button" label="Save" (click)="save()"></button>
+    <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+  </div>
+</div>

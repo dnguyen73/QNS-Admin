@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
+    "angular-froala-wysiwyg": "^2.7.1",
     "angular2-jwt": "^0.2.3",
     "angular2-moment": "^1.7.0",
     "bootstrap": "^3.3.7",
