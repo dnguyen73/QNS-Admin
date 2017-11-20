@@ -30,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
   categories = [];
   colorFiles: DropdownItem[] = [];
   selectedSizes: DropdownItem[] = [];
+  selectedValue: string;
   stocks: Stock[] = [];
   msgs: Message[] = [];
   constructor(

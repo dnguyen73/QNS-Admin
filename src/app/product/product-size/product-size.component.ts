@@ -9,9 +9,9 @@ import { Size } from "../../shared/models/size";
 })
 export class ProductSizeComponent implements OnInit {
 
-  private sizes: Size[] = [];
-  private kidSizes: Size[] = [];
-  private adultSizes: Size[] = [];
+  public sizes: Size[] = [];
+  public kidSizes: Size[] = [];
+  public adultSizes: Size[] = [];
   private selectedSizes: Size[] = [];
   constructor(private productSvc: ProductService) { }
 

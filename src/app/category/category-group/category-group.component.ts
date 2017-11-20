@@ -12,8 +12,8 @@ import { Router } from "@angular/router";
 })
 export class CategoryGroupComponent implements OnInit {
 
-  private categories: Category[] = [];
-  private newCategory: Category = new Category();
+  categories: Category[] = [];
+  newCategory: Category = new Category();
 
   @Input()
   group: ICategoryGroup;

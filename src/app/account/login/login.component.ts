@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  login(username, password){
+  login(){
     this.auth.login(this.credential.username, this.credential.password)
             .subscribe(result => {
                 if (result === true) {

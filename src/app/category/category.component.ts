@@ -16,7 +16,7 @@ const CATEGORY_GROUPS: ICategoryGroup[] = [
 export class CategoryComponent implements OnInit {
   //private categories: Category[] = [];
   //private newCategory: Category = new Category();
-  private categoryGroups = CATEGORY_GROUPS;
+  categoryGroups = CATEGORY_GROUPS;
   constructor(private categorySvc: CategoryService) { }
 
   ngOnInit() {

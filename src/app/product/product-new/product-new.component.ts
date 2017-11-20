@@ -31,6 +31,7 @@ export class ProductNewComponent implements OnInit {
   colorFiles: DropdownItem[] = [];
   selectedSizes: DropdownItem[] = [];
   msgs: Message[] = [];
+  selectedValue: string;
 
   constructor(
     private _router: Router,
