@@ -7,9 +7,9 @@ export const environment = {
   production: false,
 
   //apiUrl: 'http://localhost:3000/api',
-  apiUrl: 'http://139.59.102.174/:3000/api',
+  apiUrl: 'http://139.59.102.174:3000/api',
 
   //Domain address
   //FILE_HOST_URL: 'http://localhost:3000/files',
-  FILE_HOST_URL: 'http://139.59.102.174/:3000/files'
+  FILE_HOST_URL: 'http://139.59.102.174:3000/files'
 };
