@@ -30,7 +30,7 @@
     <p-header>Product Detail Description</p-header>
   </div>
   <div class="ui-g-12 ui-md-4 ui-sm-4">
-    <div [froalaEditor] [(froalaModel)]="myProduct.detailInfo">Hello, Froala!</div>
+    <ckeditor [(ngModel)]="myProduct.detailInfo" debounce="500"></ckeditor>
   </div>
 </div>
 

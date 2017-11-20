@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { AuthService } from "../shared/services/auth.service";
 import { Router } from "@angular/router";
@@ -15,6 +15,11 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:beforeunload')
+  clearToken() {
+    this.authService.logout();
   }
 
   login(){

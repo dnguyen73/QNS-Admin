@@ -41,13 +41,14 @@ import { ProductDetailResolve } from "./product-detail/product-detail-resolve.se
 import { AuthGuard } from "../shared/services/auth-guard.service";
 import { CategoryService } from "../shared/services/category.service";
 
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MomentModule,
+    CKEditorModule,
     RouterModule.forChild([
       { path: '', component: ProductComponent, canActivate: [AuthGuard] },
       { path: 'add/:id', component: ProductNewComponent, canActivate: [AuthGuard] },
@@ -57,7 +58,6 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
         },
       }
     ]),
-    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
     DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, RadioButtonModule, MessagesModule
   ],

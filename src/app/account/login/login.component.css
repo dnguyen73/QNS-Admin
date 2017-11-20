@@ -1,0 +1,27 @@
+.login{
+    text-align: center;
+}
+
+.login h2{
+    padding: 30px 0;
+    background: #d21b45;
+    margin: 0;
+    color: #fff;
+}
+
+.login .title{
+    font-size: 20px;
+}
+
+.login .action{
+    margin-top: 20px;
+}
+
+.login .action button{
+    background: #d21b45;
+    padding: 10px;
+    border: 1px solid #ababab;
+}
+
+
+
