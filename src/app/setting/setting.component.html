@@ -1,0 +1,37 @@
+<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+</div>
+<p>
+    Danh sách tỉnh thành
+</p>
+<p-dataTable [value]="provinces" [rows]="10" [paginator]="true" [globalFilter]="gb">
+    <p-column styleClass="">
+        <ng-template pTemplate="header">
+            <span>Tên tỉnh thành</span>
+        </ng-template>
+        <template let-province="rowData" pTemplate type="body">
+            <span class="col-date">{{ province.name }}</span>
+        </template>
+    </p-column>
+    <p-column field="code" header="Mã Code"></p-column>
+    <p-column styleClass="">
+        <ng-template pTemplate="header">
+            <span>Phí ship</span>
+        </ng-template>
+        <template let-province="rowData" pTemplate type="body">
+            <span class="col-date" *ngIf="!province.isEdit">{{ province.charge }}</span>
+            <input type="text" pInputText [(ngModel)]="province.charge" *ngIf="province.isEdit"/>
+        </template>
+    </p-column>
+    <p-column styleClass="action">
+        <ng-template pTemplate="header">
+            <button type="button" pButton icon="fa-refresh"></button>
+        </ng-template>
+        <ng-template let-province="rowData" let-idx="rowIndex" pTemplate="body">
+            <button pButton type="button" label="Edit" (click)="edit(province)" *ngIf="!province.isEdit"></button>
+            <button pButton type="button" label="Save" (click)="save(province)" *ngIf="province.isEdit"></button>
+            <button pButton type="button" label="Cancel" (click)="cancel(province)" *ngIf="province.isEdit"></button>
+        </ng-template>
+    </p-column>
+</p-dataTable>

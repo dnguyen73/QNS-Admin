@@ -17,10 +17,10 @@ export class MainComponent implements OnInit {
   ngOnInit() {
   }
 
-  @HostListener('window:beforeunload')
-  clearToken() {
-    this.authService.logout();
-  }
+  // @HostListener('window:beforeunload')
+  // clearToken() {
+  //   this.authService.logout();
+  // }
 
   login(){
     this._router.navigate(['/login']);

@@ -32,6 +32,9 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'reviews', loadChildren: './review/review.module#ReviewModule'
+            },
+            {
+                path: 'settings', loadChildren: './setting/setting.module#SettingModule'
             }
         ],
         //canActivate: [AuthGuard]

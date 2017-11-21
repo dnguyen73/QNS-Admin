@@ -4,13 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { Category } from './../models/category';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from "./http-client.service";
+import { Router } from "@angular/router";
 
 const CATEGORY_URL: string = environment.apiUrl + '/categories';
 
 @Injectable()
 export class CategoryService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private _router: Router) { }
 
   /**
    * Grab all category items from loopback api
@@ -90,12 +91,13 @@ export class CategoryService {
       .catch(this.handleError);
   }
 
-
   /**
    * Error handling method
    */
-  private handleError(error: Response | any) {
+  public handleError(error: Response | any) {
     console.error('ApiService::handleError', error);
+    //this._router.navigate(['/login']);
     return Observable.throw(error);
   }
+
 }

@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 //import { LocalStorageService, LocalStorage } from 'ngx-webstorage';
 import { tokenNotExpired } from 'angular2-jwt';
 import { BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
 
 const USER_URL: string = environment.apiUrl + '/admins';
 
@@ -14,7 +15,7 @@ export class AuthService {
   public token: string;
   isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private _router: Router) {
     // set token if saved in local storage
     this.token = localStorage.getItem('token');
   }
@@ -65,4 +66,13 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     return this.isLoginSubject.asObservable();
   }
+
+  /**
+   * Error handling method
+   */
+  // public handleError(error: Response | any) {
+  //   console.error('ApiService::handleError', error);
+  //   this._router.navigate(['/login']);
+  //   return Observable.throw(error);
+  // }
 }

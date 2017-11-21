@@ -6,6 +6,8 @@ import { FileObject } from "../models/fileobject";
 import { Size } from "../models/size";
 import { Product } from "../models/product";
 import { HttpClient } from "./http-client.service";
+import { Router } from "@angular/router";
+import { AuthService } from "./auth.service";
 
 const FILE_URL: string = environment.apiUrl + '/attachments';
 const SIZE_URL: string = environment.apiUrl + '/sizes';
@@ -14,7 +16,7 @@ const PRODUCT_URL: string = environment.apiUrl + '/products';
 @Injectable()
 export class ProductService {
 
-  constructor(private _http: HttpClient, private _httpOrigin: Http) { }
+  constructor(private _http: HttpClient, private _httpOrigin: Http, private _router: Router) { }
 
   /**
      * Generate product code randomly by A..Z0..9
@@ -182,12 +184,12 @@ export class ProductService {
       .catch(this.handleError);
   }
 
-
   /**
    * Error handling method
    */
-  private handleError(error: Response | any) {
+  public handleError(error: Response | any) {
     console.error('ApiService::handleError', error);
+    //this._router.navigate(['/login']);
     return Observable.throw(error);
   }
 
