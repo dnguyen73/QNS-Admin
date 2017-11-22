@@ -1,5 +1,5 @@
-<h4>Product Size selection</h4>
-<p-header>
+<h4>Lựa chọn Size cho sản phẩm</h4>
+<!--<p-header>
     Kid Size selection
 </p-header>
 <p-dataGrid [value]="kidSizes">
@@ -18,4 +18,6 @@
             <div class="ui-g-12 ui-md-2">{{size.label}}</div>
         </div>
     </ng-template>
-</p-dataGrid>
+</p-dataGrid>-->
+
+<p-chips [(ngModel)]="selectedSizes" (onAdd)="onChipAdded($event, value)" (onRemove)="onChipRemoved($event, value)"></p-chips>

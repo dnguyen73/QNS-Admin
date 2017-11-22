@@ -1,24 +1,24 @@
 <div class="product-detail">
   <p-messages [(value)]="msgs"></p-messages>
-  <h4>Product General Info</h4>
+  <h4>Thông tin sản phẩm</h4>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4 code-item">{{newProduct.productCode}}</div>
     <div class="ui-g-12 ui-md-8 ui-sm-4">
-      <p>Created Date : {{today | amDateFormat:'LL'}} - {{newProduct.createdDate}}
-        <input type="text" pInputText [(ngModel)]="newProduct.productName" placeholder="Type in brief product name" />
+      <p>Ngày đăng : {{today | amDateFormat:'LL'}} - {{newProduct.createdDate}}
+        <input type="text" pInputText [(ngModel)]="newProduct.productName" placeholder="Tên hiển thị sản phẩm" />
     </div>
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Category</p-header>
+      <p-header>Danh mục</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-dropdown [options]="categories" [(ngModel)]="newProduct.categoryId" placeholder="Select category"></p-dropdown>
+      <p-dropdown [options]="categories" [(ngModel)]="newProduct.categoryId" placeholder="Chọn danh mục"></p-dropdown>
     </div>
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Product Description</p-header>
+      <p-header>Thông tin ngắn gọn về sản phẩm</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       <textarea [rows]="5" [cols]="60" pInputTextarea [(ngModel)]="newProduct.description" autoResize="true"></textarea>
@@ -26,7 +26,7 @@
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Product Detail Description</p-header>
+      <p-header>Tất cả thông tin chi tiết về sản phẩm</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       <ckeditor [(ngModel)]="newProduct.detailInfo" debounce="500">
@@ -35,10 +35,10 @@
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Original Vendor</p-header>
+      <p-header>Nguồn gốc</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <input type="text" pInputText [(ngModel)]="newProduct.originalVendor" placeholder="Type in vendor" />
+      <input type="text" pInputText [(ngModel)]="newProduct.originalVendor" placeholder="Nhập nguồn hàng" />
     </div>
   </div>
 
@@ -57,11 +57,11 @@
 
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-2 ui-sm-2">
-      <label>Unit Price</label>
+      <label>Đơn giá</label>
     </div>
     <div class="ui-g-12 ui-md-2 ui-sm-2">
       <div class="ui-inputgroup">
-        <input type="number" pInputText [(ngModel)]="newProduct.price" placeholder="Price">
+        <input type="number" pInputText [(ngModel)]="newProduct.price" placeholder="Giá sản phẩm">
         <span class="ui-inputgroup-addon">VND</span>
       </div>
     </div>
@@ -69,17 +69,17 @@
 
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-2 ui-sm-2">
-      <label>On Sale?</label>
+      <label>Hàng sale ?</label>
     </div>
     <div class="ui-g-12 ui-md-2 ui-sm-2">
-      <p-inputSwitch onLabel="Sale" offLabel="No Sale" [(ngModel)]="newProduct.isOnSale"></p-inputSwitch>
+      <p-inputSwitch onLabel="Sale" offLabel="Không Sale" [(ngModel)]="newProduct.isOnSale"></p-inputSwitch>
     </div>
     <div class="ui-g-12 ui-md-2 ui-sm-2">
-      <label>Discount</label>
+      <label>Giảm giá</label>
     </div>
     <div class="ui-g-12 ui-md-6 ui-sm-6">
-      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val1" [(ngModel)]="selectedValue" label="New Price"></p-radioButton>
-      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val2" [(ngModel)]="selectedValue" label="Discount Percentage"></p-radioButton>
+      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val1" [(ngModel)]="selectedValue" label="Giá mới"></p-radioButton>
+      <p-radioButton [disabled]="!newProduct.isOnSale" name="groupname" value="val2" [(ngModel)]="selectedValue" label="Phần trăm giảm"></p-radioButton>
       <div *ngIf="selectedValue=='val1'">
         <div class="ui-inputgroup">
           <input type="number" pInputText [(ngModel)]="newProduct.discountPrice" placeholder="Price">
@@ -97,8 +97,8 @@
     </div>
   </div>
   <div class="action-pane">
-    <button pButton type="button" label="Create Product" (click)="submit()"></button>
-    <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+    <button pButton type="button" label="Tạo sản phẩm" (click)="submit()"></button>
+    <button pButton type="button" label="Hủy" (click)="cancel()"></button>
   </div>
 
 </div>

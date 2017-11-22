@@ -20,6 +20,7 @@ import { ProductService } from './../shared/services/product.service';
 
 //Import PrimeNg UI Components
 import { TabMenuModule, MenuItem } from 'primeng/primeng';
+import {ChipsModule} from 'primeng/primeng';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { ProductUploadComponent } from './product-upload/product-upload.component';
 import { FileUploadModule } from 'primeng/primeng';
@@ -58,7 +59,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
         },
       }
     ]),
-    TabMenuModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
+    TabMenuModule, ChipsModule, FileUploadModule, DataTableModule, SharedModule, ConfirmDialogModule, CheckboxModule, InputTextModule, DropdownModule,
     DataGridModule, InputTextareaModule, SpinnerModule, InputSwitchModule, RadioButtonModule, MessagesModule
   ],
   providers: [ProductService, ProductDetailResolve, CategoryService, ConfirmationService],

@@ -17,20 +17,20 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a routerLink="" routerLinkActive="active" routerLinkActiveOptions="{exact : true}">Home</a></li>
-          <li><a routerLink="/categories" routerLinkActive="active">Category</a></li>
-          <li><a [routerLink]="['/products']" routerLinkActive="active">Product</a></li>
-          <li><a [routerLink]="['/orders']" routerLinkActive="active">Order</a></li>
-          <li><a [routerLink]="['/reviews']" routerLinkActive="active">Review</a></li>
-          <li><a [routerLink]="['/settings']" routerLinkActive="active">Settings</a></li>
+          <li><a routerLink="/categories" routerLinkActive="active">Danh mục</a></li>
+          <li><a [routerLink]="['/products']" routerLinkActive="active">Sản phẩm</a></li>
+          <li><a [routerLink]="['/orders']" routerLinkActive="active">Đơn hàng</a></li>
+          <li><a [routerLink]="['/reviews']" routerLinkActive="active">Đánh giá</a></li>
+          <li><a [routerLink]="['/settings']" routerLinkActive="active">Cấu hình</a></li>
         </ul>
 
         <ul class="navbar-text navbar-right">
           <li *ngIf="!(isLoggedIn | async)" (click)="login()">
-            <a>Login</a>
+            <a>Đăng nhập</a>
           </li>
           <li *ngIf=" (isLoggedIn | async) ">
-            <span>Welcome Admin | </span>
-            <a (click)="logout()">Logout</a>
+            <span>Xin chào Admin | </span>
+            <a (click)="logout()">Thoát</a>
           </li>
         </ul>
       </div>

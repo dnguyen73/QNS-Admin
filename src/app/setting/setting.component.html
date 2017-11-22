@@ -1,6 +1,6 @@
 <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
     <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+    <input #gb type="text" pInputText size="50" placeholder="Tìm tổng thể">
 </div>
 <p>
     Danh sách tỉnh thành
@@ -29,9 +29,9 @@
             <button type="button" pButton icon="fa-refresh"></button>
         </ng-template>
         <ng-template let-province="rowData" let-idx="rowIndex" pTemplate="body">
-            <button pButton type="button" label="Edit" (click)="edit(province)" *ngIf="!province.isEdit"></button>
-            <button pButton type="button" label="Save" (click)="save(province)" *ngIf="province.isEdit"></button>
-            <button pButton type="button" label="Cancel" (click)="cancel(province)" *ngIf="province.isEdit"></button>
+            <button pButton type="button" label="Thay đổi" (click)="edit(province)" *ngIf="!province.isEdit"></button>
+            <button pButton type="button" label="Lưu" (click)="save(province)" *ngIf="province.isEdit"></button>
+            <button pButton type="button" label="Hủy" (click)="cancel(province)" *ngIf="province.isEdit"></button>
         </ng-template>
     </p-column>
 </p-dataTable>

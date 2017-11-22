@@ -1,27 +1,27 @@
 <!-- Stock Section -->
-<h4>Product Stock selection</h4>
+<h4>Thông tin kho hàng</h4>
 <div class="stock-item">
   <p-dataTable [value]="stocks">
-    <p-column field="filename" header="File Name"></p-column>
+    <p-column field="filename" header="File hình ảnh"></p-column>
     <p-column styleClass="action">
       <ng-template pTemplate="header">
-        <label>Color Description</label>
+        <label>Tên màu sắc</label>
       </ng-template>
       <ng-template let-row="rowData" pTemplate="body">
-        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" [(ngModel)]="row.filename" placeholder="Select a color"></p-dropdown>
+        <p-dropdown [options]="colorFiles" (onChange)="onColorSelected($event, row)" [(ngModel)]="row.filename" placeholder="Chọn màu"></p-dropdown>
       </ng-template>
     </p-column>
     <p-column styleClass="action">
       <ng-template pTemplate="header">
-        <label>Size Selection</label>
+        <label>Chọn Size</label>
       </ng-template>
       <ng-template let-rs="rowData" pTemplate="body">
-        <p-dropdown [options]="selectedSizes" [styleClass]="stock-dropdown" [(ngModel)]="rs.size" placeholder="Select a size"></p-dropdown>
+        <p-dropdown [options]="selectedSizes" [styleClass]="stock-dropdown" [(ngModel)]="rs.size" placeholder="Chọn size"></p-dropdown>
       </ng-template>
     </p-column>
     <p-column styleClass="action">
       <ng-template pTemplate="header">
-        <label>Quantity</label>
+        <label>Số lượng</label>
       </ng-template>
       <ng-template let-row="rowData" pTemplate="body">
         <!--<input type="number" pInputText [(ngModel)]="row.quantity" (ngChange)="sumQuantity()" />-->
@@ -36,9 +36,9 @@
         <button type="button" pButton (click)="removeStock(i)" icon="fa-trash"></button>
       </ng-template>
     </p-column>
-    <p-footer>Total quantity : {{totalQuantity}}</p-footer>
+    <p-footer>Tổng số lượng : {{totalQuantity}}</p-footer>
   </p-dataTable>
 </div>
 <div class="action-pane">
-  <button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Add Stock Item"></button>
+  <button type="button" pButton (click)="onAddStock()" icon="fa-add" label="Thêm vào kho hàng"></button>
 </div>

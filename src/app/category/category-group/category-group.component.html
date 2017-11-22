@@ -2,12 +2,12 @@
 <ul class="new-cate-box">
   <li><span class="ui-float-label">
     <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.name"> 
-    <label for="float-input">Add new category</label>
+    <label for="float-input">Thêm danh mục mới</label>
   </span>
   </li>
   <li><span class="ui-float-label">
     <input id="float-input" type="text" size="30" pInputText [(ngModel)]="newCategory.label"> 
-    <label for="float-input">Add new label</label>
+    <label for="float-input">Thêm nhãn (girl | boy)</label>
   </span>
   </li>
   <li><button pButton type="button" label="Add Category" (click)="addCategory()"></button></li>
@@ -15,10 +15,10 @@
 
 <div>
   <p-dataTable [value]="categories">
-    <p-column field="parentId" header="Parent ID"></p-column>
-    <p-column field="name" [style]="{'width': '300px'}" header="Name"></p-column>
-    <p-column field="label" header="Label"></p-column>
-    <p-column field="route" header="Route Name"></p-column>
+    <p-column field="parentId" header="ID chính"></p-column>
+    <p-column field="name" [style]="{'width': '300px'}" header="Tên danh mục"></p-column>
+    <p-column field="label" header="Nhãn"></p-column>
+    <p-column field="route" header="Tên route"></p-column>
     <!--<p-column field="color" header="Color">
       <ng-template let-col let-car="rowData" pTemplate="body">
           <span [style.color]="car[col.field]">{{car[col.field]}}</span>

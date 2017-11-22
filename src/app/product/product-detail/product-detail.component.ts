@@ -78,12 +78,12 @@ export class ProductDetailComponent implements OnInit {
   }
 
   //EventEmitter handler from product-size component
-  onSizeSelected(sizes: Size[]) {
+  onSizeSelected(sizes: string[]) {
     this.selectedSizes = [];
-    for (let i of sizes) {
+    for (let s of sizes) {
       this.selectedSizes = this.selectedSizes.concat({
-        label: i.label,
-        value: i.label
+        label: s,
+        value: s
       });
     }
     //update stock

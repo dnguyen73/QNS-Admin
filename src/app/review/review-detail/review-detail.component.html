@@ -1,15 +1,15 @@
 <div class="order-detail">
-  <h4>Review Info</h4>
+  <h4>Thông tin đánh giá</h4>
   <div class="ui-g ui-fluid">
     <!--<div class="ui-g-12 ui-md-4 ui-sm-4 code-item">#{{myOrder.orderCode}}#</div>-->
     <div class="ui-g-12 ui-md-8 ui-sm-4">
-      <p>Created Date : {{myReview.createdDate}}
+      <p>Ngày đánh giá : {{myReview.createdDate}}
     </div>
   </div>
 
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Customer name:</p-header>
+      <p-header>Tên người đánh giá:</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       {{myReview.name}}
@@ -25,7 +25,7 @@
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Title:</p-header>
+      <p-header>Tiêu đề:</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       {{myReview.title}}
@@ -33,7 +33,7 @@
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Comments:</p-header>
+      <p-header>Nội dung đánh giá:</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       {{myReview.comment}}
@@ -41,15 +41,15 @@
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Status:</p-header>
+      <p-header>Trạng thái:</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-inputSwitch onLabel="Approved" offLabel="Pending" [(ngModel)]="myReview.status"></p-inputSwitch>
+      <p-inputSwitch onLabel="Đã duyệt" offLabel="Chưa duyệt" [(ngModel)]="myReview.status"></p-inputSwitch>
     </div>
   </div>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-md-4 ui-sm-4">
-      <p-header>Rating:</p-header>
+      <p-header>Đánh giá:</p-header>
     </div>
     <div class="ui-g-12 ui-md-4 ui-sm-4">
       {{myReview.rating}}
@@ -58,7 +58,7 @@
   
 
   <div class="action-pane">
-    <button pButton type="button" label="Save" (click)="complete()"></button>
-    <button pButton type="button" label="Cancel" (click)="cancel()"></button>
+    <button pButton type="button" label="Xác nhận" (click)="complete()"></button>
+    <button pButton type="button" label="Hủy" (click)="cancel()"></button>
   </div>
 </div>

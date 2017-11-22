@@ -1,9 +1,9 @@
 <!--<p-fileUpload #fileUpload name="file" url="http://0.0.0.0:3000/api/attachments/1/upload" auto="true" chooseLabel="Browse"
     (onUpload)="onUploadCompleted($event)" (onSelect)="onSelectCompleted($event, fileUpload)"></p-fileUpload>-->
-<h4>Product Image selection</h4>
+<h4>Chọn hình sản phẩm</h4>
 <p-fileUpload #fileUpload name="file" customUpload="true" (onSelect)="onSelectCompleted($event)">
     <ng-template pTemplate="toolbar">
-        <button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Refresh"></button>
+        <button type="button" pButton (click)="onRefresh()" icon="fa-refresh" label="Cập nhật"></button>
     </ng-template>
     <ng-template pTemplate type="content">
 
@@ -13,7 +13,7 @@
 <p-dataTable [value]="uploadedFiles">
     <p-column styleClass="action">
         <ng-template pTemplate="header">
-            <label>Image</label>
+            <label>Hình ảnh</label>
         </ng-template>
         <ng-template let-f="rowData" pTemplate="body">
             <div><img [src]="sanitize(f.filepath)" width="50px"></div>
@@ -23,7 +23,7 @@
     <p-column field="filesize" [style]="{'width': '60px'}" header="Size"></p-column>
     <p-column styleClass="action">
         <ng-template pTemplate="header">
-            <label>Use for Color</label>
+            <label>Chọn làm màu</label>
         </ng-template>
         <ng-template let-f="rowData" pTemplate="body">
             <p-checkbox [(ngModel)]="f.isColor" binary="true"></p-checkbox>
@@ -31,7 +31,7 @@
     </p-column>
     <p-column styleClass="action">
         <ng-template pTemplate="header">
-            <label>Color Description</label>
+            <label>Tên màu sắc</label>
         </ng-template>
         <ng-template let-f="rowData" pTemplate="body">
             <input type="text" pInputText [(ngModel)]="f.description" />
