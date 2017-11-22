@@ -44,11 +44,11 @@ export class ProductSizeComponent implements OnInit {
     //   });
   }
 
-  onChipAdded($e, val) {
+  onChipAdded($e) {
     this.sizeSelected.emit(this.selectedSizes);
   }
 
-  onChipRemoved($e, val) {
+  onChipRemoved($e) {
     this.sizeSelected.emit(this.selectedSizes);
   }
 
