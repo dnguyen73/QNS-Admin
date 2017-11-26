@@ -142,6 +142,8 @@ export class ProductNewComponent implements OnInit {
           (newProduct) => {
             this.showSuccess();
             this.reset();
+            alert('Thêm sản phẩm thành công');
+            this._router.navigate(['/products']);
           }
           );
       });
