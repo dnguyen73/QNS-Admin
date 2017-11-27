@@ -36,4 +36,16 @@ export class ProductListComponent implements OnInit, OnChanges {
   viewDetail(product: Product){
     this._router.navigate(['products/detail', product.productCode]);
   }
+
+  delete(product: Product){
+    this.productSvc.deleteProduct(product)
+      .subscribe(res => {
+        if (res.count){
+          alert('Xóa sản phẩm thành công');
+          this.fetchProducts(this.parentId);
+        } else {
+          alert('Xóa sản phẩm thất bại');
+        }
+      })
+  }
 }

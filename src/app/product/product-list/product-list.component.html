@@ -17,6 +17,7 @@
       </ng-template>
       <ng-template let-product="rowData" pTemplate="body">
           <button type="button" pButton (click)="viewDetail(product)" icon="fa-pencil"></button>
+          <button type="button" pButton (click)="delete(product)" icon="fa-remove"></button>
       </ng-template>
   </p-column>
 </p-dataTable>

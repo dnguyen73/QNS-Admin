@@ -185,6 +185,19 @@ export class ProductService {
   }
 
   /**
+   * Update existing product by a new one -> update product properties
+   * Note: Http post request will be cold if there is not any subcribe() call
+   */
+  deleteProduct(product: Product): Observable<any> {
+    return this._http
+      .delete(PRODUCT_URL + "/" + product.id)
+      .map((res) => {
+        return res.json();
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * Error handling method
    */
   public handleError(error: Response | any) {
