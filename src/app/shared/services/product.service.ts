@@ -185,8 +185,7 @@ export class ProductService {
   }
 
   /**
-   * Update existing product by a new one -> update product properties
-   * Note: Http post request will be cold if there is not any subcribe() call
+   * Remove existing product
    */
   deleteProduct(product: Product): Observable<any> {
     return this._http

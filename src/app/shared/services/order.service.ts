@@ -70,6 +70,18 @@ export class OrderService {
   }
 
   /**
+   * Remove existing product
+   */
+  deleteOrder(order: Order): Observable<any> {
+    return this._http
+      .delete(ORDER_URL + "/" + order.id)
+      .map((res) => {
+        return res.json();
+      })
+      .catch(this.handleError);
+  }
+
+  /**
    * Error handling method
    */
   private handleError(error: Response | any) {

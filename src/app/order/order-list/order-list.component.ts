@@ -14,7 +14,7 @@ export class OrderListComponent implements OnInit, OnChanges {
   constructor(private _router: Router, private orderSvc: OrderService) { }
 
   ngOnInit() {
-    this.fetchOrdersByStatus(this.status);//TO-DO: Replace 1 by Group ID
+    this.fetchOrdersByStatus(this.status);
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -39,6 +39,19 @@ export class OrderListComponent implements OnInit, OnChanges {
   //View order details
   viewDetail(order: Order){
     this._router.navigate(['orders/detail', order.orderCode]);
+  }
+
+  //Delete order item
+  delete(order: Order){
+    this.orderSvc.deleteOrder(order)
+      .subscribe(res => {
+        if (res.count){
+          alert('Hủy đơn hàng thành công');
+          this.fetchOrdersByStatus(this.status);
+        } else {
+          alert('Hủy đơn hàng thất bại');
+        }
+      })
   }
 
 }
