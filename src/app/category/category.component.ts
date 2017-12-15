@@ -5,7 +5,8 @@ import { ICategoryGroup } from "../shared/interfaces/ICategoryGroup";
 const CATEGORY_GROUPS: ICategoryGroup[] = [
   { id: 1, title: "Quần áo nữ" },
   { id: 2, title: "Quần áo trung niên" },
-  { id: 3, title: "Quần áo trẻ em" }
+  { id: 3, title: "Quần áo trẻ em" },
+  { id: 4, title: "Phụ kiện" }
 ];
 
 @Component({

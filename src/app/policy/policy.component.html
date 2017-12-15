@@ -1,0 +1,23 @@
+<div class="policy-detail">
+  <h4>Chính sách đổi trả</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-3 ui-sm-9">
+      <button pButton type="button" (click)="saveRefundPolicy()" label="Thay đổi"></button>
+    </div>
+    <div class="ui-g-12 ui-md-9 ui-sm-9">
+      <ckeditor [(ngModel)]="refundPolicy.content" debounce="500">
+      </ckeditor>
+    </div>
+  </div>
+
+  <h4>Chính sách ship hàng</h4>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-3 ui-sm-3">
+      <button pButton type="button" (click)="saveShippingPolicy()" label="Thay đổi"></button>
+    </div>
+    <div class="ui-g-12 ui-md-9 ui-sm-9">
+      <ckeditor [(ngModel)]="shippingPolicy.content" debounce="500">
+      </ckeditor>
+    </div>
+  </div>
+</div>

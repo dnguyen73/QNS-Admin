@@ -40,6 +40,9 @@ export class CategoryGroupComponent implements OnInit {
       case 3:
         this.newCategory.route = "kids";
         break;
+      case 4:
+        this.newCategory.route = "accessory";
+        break;
     }   
     this.categorySvc
       .addCategory(this.newCategory)

@@ -35,6 +35,9 @@ export const appRoutes: Route[] = [
             },
             {
                 path: 'settings', loadChildren: './setting/setting.module#SettingModule'
+            },
+            {
+                path: 'policies', loadChildren: './policy/policy.module#PolicyModule'
             }
         ],
         //canActivate: [AuthGuard]

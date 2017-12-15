@@ -22,7 +22,6 @@ import { AccountModule } from "./account/account.module";
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from "./shared/services/auth-guard.service";
 import { HttpClient } from "./shared/services/http-client.service";
-import { SettingComponent } from './setting/setting.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
