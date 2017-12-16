@@ -144,6 +144,8 @@ export class ProductDetailComponent implements OnInit {
           .subscribe(
           (newProduct) => {
             this.showSuccess();
+            alert('Update sản phẩm thành công');
+            this._router.navigate(['/products']);
           });
       });
 

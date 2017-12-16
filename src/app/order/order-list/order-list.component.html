@@ -11,9 +11,9 @@
         <ng-template pTemplate="header">
             <span>Date</span>
         </ng-template>
-        <template let-order="rowData" pTemplate type="body">
+        <ng-template let-order="rowData" pTemplate type="body">
             <span class="col-date">{{ order.orderDate | date:'dd/MM/yyyy' }}</span>
-        </template>
+        </ng-template>
     </p-column>
     <p-column field="shippingFee" header="Shipping Fee"></p-column>
     <p-column field="orderAmount" header="Order Amt"></p-column>
