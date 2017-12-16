@@ -21,20 +21,20 @@ export class ProductComponent implements OnInit {
   }
 
   changeHTTPS() {
-    // this.productSvc.getAllProducts()
-    //   .subscribe((products) => {
-    //     for (let p of products) {
-    //       let str = JSON.stringify(p);
-    //       str = str.replace(new RegExp("http", "g"), 'https');
-    //       let pr: Product = new Product(JSON.parse(str));
-    //       //Call API service to store product item to database
-    //       this.productSvc
-    //         .updateProduct(pr)
-    //         .subscribe(
-    //         (newProduct) => {
-    //           //
-    //         });
-    //     }
-    //   });
+    this.productSvc.getAllProducts()
+      .subscribe((products) => {
+        for (let p of products) {
+          let str = JSON.stringify(p);
+          str = str.replace(new RegExp("https", "g"), 'http');
+          let pr: Product = new Product(JSON.parse(str));
+          //Call API service to store product item to database
+          this.productSvc
+            .updateProduct(pr)
+            .subscribe(
+            (newProduct) => {
+              //
+            });
+        }
+      });
   }
 }
