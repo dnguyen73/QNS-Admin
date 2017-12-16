@@ -10,19 +10,19 @@
         <ng-template pTemplate="header">
             <span>Tên tỉnh thành</span>
         </ng-template>
-        <template let-province="rowData" pTemplate type="body">
+        <ng-template let-province="rowData" pTemplate type="body">
             <span class="col-date">{{ province.name }}</span>
-        </template>
+        </ng-template>
     </p-column>
     <p-column field="code" header="Mã Code"></p-column>
     <p-column styleClass="">
         <ng-template pTemplate="header">
             <span>Phí ship</span>
         </ng-template>
-        <template let-province="rowData" pTemplate type="body">
+        <ng-template let-province="rowData" pTemplate type="body">
             <span class="col-date" *ngIf="!province.isEdit">{{ province.charge }}</span>
             <input type="text" pInputText [(ngModel)]="province.charge" *ngIf="province.isEdit"/>
-        </template>
+        </ng-template>
     </p-column>
     <p-column styleClass="action">
         <ng-template pTemplate="header">

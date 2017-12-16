@@ -11,9 +11,9 @@
         <ng-template pTemplate="header">
             <span>Ngày tạo</span>
         </ng-template>
-        <template let-review="rowData" pTemplate type="body">
+        <ng-template let-review="rowData" pTemplate type="body">
             <span class="col-date">{{ review.createdDate | date:'dd/MM/yyyy' }}</span>
-        </template>
+        </ng-template>
     </p-column>
     <p-column field="name" header="Người đánh giá"></p-column>
     <p-column field="rating" header="Điểm"></p-column>
