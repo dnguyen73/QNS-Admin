@@ -1,5 +1,3 @@
-<!--<p-fileUpload #fileUpload name="file" url="http://0.0.0.0:3000/api/attachments/1/upload" auto="true" chooseLabel="Browse"
-    (onUpload)="onUploadCompleted($event)" (onSelect)="onSelectCompleted($event, fileUpload)"></p-fileUpload>-->
 <h4>Chọn hình sản phẩm</h4>
 <p-fileUpload #fileUpload name="file" customUpload="true" (onSelect)="onSelectCompleted($event)">
     <ng-template pTemplate="toolbar">
