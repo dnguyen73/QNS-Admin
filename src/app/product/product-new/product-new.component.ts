@@ -125,6 +125,8 @@ export class ProductNewComponent implements OnInit {
     //assign stocks array list from product-stock component
     this.newProduct.stocks = this.stockChild.stocks;
     this.newProduct.totalQuantity = this.stockChild.totalQuantity;
+    this.newProduct.description =  this.newProduct.description ?  this.newProduct.description : "Đang cập nhật";
+    this.newProduct.detailInfo =  this.newProduct.detailInfo ?  this.newProduct.detailInfo : "Đang cập nhật";
 
     //Call API to upload selected files
     this.productSvc
