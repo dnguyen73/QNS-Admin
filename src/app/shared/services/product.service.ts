@@ -132,11 +132,10 @@ export class ProductService {
    */
   getProductsByParentId(pId: number): Observable<Product[]> {
     return this._http
-      .get(PRODUCT_URL)
+      .get(PRODUCT_URL + "/findAllByParentId?parentId=" + pId)
       .map(res => {
         const products = res.json();
         return products
-          .filter(p => p.parentId === pId)
           .map((product) => new Product(product));
       })
       .catch(this.handleError);
